@@ -1,0 +1,2548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario por Niveles</title>
+    <style>
+    body {
+  background-image: linear-gradient(to bottom, #ADD8E6, white); /* Azul claro a blanco */
+}
+
+
+    h1 {
+  background-image: linear-gradient(to bottom, #87CEFA, white);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 30px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        #reloj-container {
+            background-color: #fff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+            color: #3498db;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #selector-niveles {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        #selector-niveles h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        #selector-niveles button {
+            padding: 12px 25px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
+        #selector-niveles button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+        }
+        .nivel {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            padding: 30px;
+            width: 80%;
+            max-width: 700px;
+        }
+        .nivel h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
+        .pregunta {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .pregunta:last-child {
+            border-bottom: none;
+        }
+        .pregunta p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .opciones label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            background-color: #f9f9f9;
+        }
+        .opciones label:hover {
+            background-color: #f0f0f0;
+            border-color: #d0d0d0;
+        }
+        .opciones input[type="radio"] {
+            margin-right: 10px;
+        }
+        #contenedor-niveles {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #resultados {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #e6f9e8;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #155724;
+            display: none;
+            font-size: 18px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+        }
+        #resultados h2 {
+            color: #28a745;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .correcto {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+        .incorrecto {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+        }
+        .seleccionada {
+            border: 2px solid #3498db !important;
+        }
+        #siguienteNivelBtn, #finalizarBtn {
+            padding: 14px 30px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
+        #siguienteNivelBtn:hover, #finalizarBtn:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+        }
+        #siguienteNivelBtn {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1> DIOS Y PATRIA</h1>
+    <h2>Hola señor funcionario, espero que tenga un excelente dia¡ EMPECEMOS</h2>
+    <div id="reloj-container">
+        <span id="hora"></span>:<span id="minutos"></span>:<span id="segundos"></span>
+        </div>
+    <div id="selector-niveles">
+        <h2>Selecciona un Nivel:</h2>
+    </div>
+
+    <div id="contenedor-niveles">
+        </div>
+
+    <div id="resultados" style="display: none;">
+        <h2>Resultados</h2>
+        <p>Tu puntuación total es: <span id="puntuacion-total"></span></p>
+    </div>
+
+    <button onclick="mostrarSiguienteNivel()" id="siguienteNivelBtn">Siguiente Nivel</button>
+    <button onclick="finalizarCuestionario()" id="finalizarBtn" style="display: none;">Finalizar Cuestionario</button>
+
+    <script>
+        const relojContainer = document.getElementById('reloj-container');
+        const horaSpan = document.getElementById('hora');
+        const minutosSpan = document.getElementById('minutos');
+        const segundosSpan = document.getElementById('segundos');
+        const selectorNivelesDiv = document.getElementById('selector-niveles');
+        const contenedorNiveles = document.getElementById('contenedor-niveles');
+        const resultadosDiv = document.getElementById('resultados');
+        const puntuacionTotalSpan = document.getElementById('puntuacion-total');
+        const siguienteNivelBtn = document.getElementById('siguienteNivelBtn');
+        const finalizarBtn = document.getElementById('finalizarBtn');
+
+        let nivelActual = null;
+        let puntuacion = 0;
+        const preguntasPorNivel = 30;
+        const cuestionario = [
+            {
+                nivel: 1,
+                preguntas: [
+                {
+  pregunta: "Un periodista presenta un derecho de petición ante la Fiscalía solicitando copia del informe de interceptaciones telefónicas realizadas a una red criminal. La entidad responde que no puede entregarlo porque la información es reservada y hace parte de una investigación activa. Según la Ley 1755 de 2015, ¿por qué es válida esta respuesta?",
+  opciones: ["Porque no se puede acceder a ninguna información pública sin orden judicial.", "Porque la ley permite negar acceso a información clasificada o reservada cuando pueda afectar procesos judiciales o la seguridad del Estado.", "Porque las solicitudes hechas por periodistas deben hacerse directamente al presidente.", "Porque el periodismo no está incluido entre los sujetos activos del derecho de petición."],
+  respuestaCorrecta: "Porque la ley permite negar acceso a información clasificada o reservada cuando pueda afectar procesos judiciales o la seguridad del Estado."
+},
+{
+  pregunta: "Un soldado profesional decide no regresar a su batallón después de su permiso de fin de semana. Permanece 15 días ausente sin justificación, hasta que es capturado en una revisión de rutina. ¿Cuál es el delito que podría atribuírsele según el Código Penal Militar?",
+  opciones: ["Ausencia justificada", "Deserción simple", "Abandono del puesto", "Abandono del servicio"],
+  respuestaCorrecta: "Abandono del servicio"
+},
+{
+  pregunta: "Un técnico de inteligencia militar, molesto con su unidad, publica en redes sociales un documento confidencial sobre operaciones en frontera, filtrando nombres de oficiales y coordenadas de despliegue táctico. Según el Código Penal Militar, ¿qué conducta puede imputársele?",
+  opciones: ["Injuria agravada", "Revelación de secreto", "Sabotaje militar", "Abandono de puesto con consecuencias graves"],
+  respuestaCorrecta: "Revelación de secreto"
+},
+{
+  pregunta: "Un soldado bachiller fue llamado a presentarse en el batallón el lunes 8 de abril a las 7:00 a. m., luego de su permiso de Semana Santa. Decide no presentarse sin justificación alguna, y permanece ausente durante más de 30 días. Finalmente, es capturado por la Policía en su casa. Según el Código Penal Militar, esta conducta corresponde al delito de:",
+  opciones: ["Abandono del puesto", "Desobediencia", "Deserción", "Incumplimiento de deberes militares"],
+  respuestaCorrecta: "Deserción"
+},
+{
+  pregunta: "Un oficial del Ejército Nacional es designado como comandante de una patrulla en zona de frontera, con funciones de inteligencia y control territorial. Sin autorización, abandona la operación y se traslada por cuenta propia a una ciudad cercana para visitar a su familia por el término de 30 horas. El operativo queda sin mando y en riesgo operativo. Según el Código Penal Militar colombiano, ¿cuál es el delito que podría imputársele?",
+  opciones: ["Abandono del servicio", "Omisión de funciones tácticas", "Abandono de comando especial", "Abandono de comando superior"],
+  respuestaCorrecta: "Abandono de comando especial"
+},
+{
+  pregunta: "Durante una operación de patrullaje en zona roja, un cabo segundo recibe una orden directa de su superior para mantener la posición y cubrir un flanco. El cabo, molesto por una discusión previa, decide ignorar la orden y abandonar el punto asignado, dejando descubierta la zona por varios minutos. El superior lo confronta y él responde de manera altanera y violenta: \"Usted no manda en mí, yo hago lo que me parezca\". Según el Código Penal Militar colombiano, esta conducta se considera:",
+  opciones: ["Desobediencia", "Insubordinación, por negarse a cumplir una orden en acto del servicio", "Abandono del servicio por razones personales", "Falta administrativa sin relevancia penal"],
+  respuestaCorrecta: "Insubordinación, por negarse a cumplir una orden en acto del servicio"
+},
+{
+  pregunta: "Un sargento recibe una orden directa y escrita de su comandante de compañía para presentarse con su escuadra en el puesto de control a las 18:00 horas. El sargento decide no cumplir la orden porque considera que esa zona es peligrosa y no se siente preparado. Informa por radio: \"No voy, porque no estoy de acuerdo con esa decisión\". De acuerdo con el Código Penal Militar colombiano, la conducta del sargento constituye:",
+  opciones: ["Un acto legítimo de autodefensa operacional", "Insubordinación con desconocimiento de jerarquía", "Desobediencia, por no acatar una orden sin justificarlo válidamente", "Omisión simple sin consecuencias penales"],
+  respuestaCorrecta: "Desobediencia, por no acatar una orden sin justificarlo válidamente"
+},
+{
+  pregunta: "Camilo está en su casa cuando escucha ruidos en el primer piso. Al bajar, encuentra a un hombre encapuchado forzando la puerta de su habitación. El intruso, al notar a Camilo, saca un cuchillo y avanza hacia él. Camilo corre a la cocina, toma un cuchillo de mayor tamaño y, al verse acorralado, lo hiere en el abdomen. El asaltante muere minutos después. De acuerdo con el Código Penal colombiano, ¿la conducta de Camilo constituye una causal de ausencia de responsabilidad penal?",
+  opciones: ["No, porque usó un arma blanca con mayor poder ofensivo que la del agresor.", "Sí, porque actuó en legítima defensa frente a una agresión actual, ilegítima y sin provocación.", "No, porque debió llamar a la policía en vez de actuar por cuenta propia.", "Sí, pero solo si prueba que el agresor tenía antecedentes penales."],
+  respuestaCorrecta: "Sí, porque actuó en legítima defensa frente a una agresión actual, ilegítima y sin provocación."
+},
+{
+  pregunta: "Luis, conductor de ambulancia, transporta a un paciente en estado crítico hacia el hospital más cercano. En el camino, encuentra un trancón causado por una manifestación. Para poder avanzar, rompe una reja privada y atraviesa una zona restringida que normalmente está prohibida para vehículos. Gracias a esto, logra salvar la vida del paciente, aunque causa daños materiales al dueño del predio. ¿La conducta de Luis puede considerarse exenta de responsabilidad penal según el Código Penal colombiano?",
+  opciones: ["Sí, porque actuó en estado de necesidad para evitar un mal mayor.", "No, porque causó daños materiales a propiedad ajena.", "Sí, pero solo si tenía permiso del propietario para pasar.", "No, porque violó normas de tránsito y acceso privado."],
+  respuestaCorrecta: "Sí, porque actuó en estado de necesidad para evitar un mal mayor."
+},
+                {
+  pregunta: "De acuerdo al código penal podemos decir que existe tentativa cuando.",
+  opciones: [
+    "El que iniciare la ejecución de una conducta punible mediante actos idóneos e inequívocamente dirigidos a su consumación, y ésta no se produjere por circunstancias ajenas a su voluntad",
+    "El que iniciare la ejecución de una conducta punible mediante actos idóneos e inequívocamente dirigidos a su consumación, y ésta no se produjere por su propia voluntad",
+    "El que planeara la ejecución de una conducta punible pero no realizare los actos idóneos para lograr su consumación",
+    "El que ejecutare la conducta punible mediante actos idóneos e inequívocamente dirigidos a su real consumación"
+  ],
+  respuestaCorrecta: "El que iniciare la ejecución de una conducta punible mediante actos idóneos e inequívocamente dirigidos a su consumación, y ésta no se produjere por circunstancias ajenas a su voluntad"
+},
+{
+  pregunta: "La ley 599 de 2000 establece que la conducta es dolosa, culposa o preterintencional. ¿Cuál de las siguientes son punibles solo en los casos expresamente señalados por la ley?",
+  opciones: [
+    "El dolo y la culpa",
+    "El dolo y la preterintencional",
+    "La preterintencional y la culpa",
+    "Únicamente el dolo"
+  ],
+  respuestaCorrecta: "La preterintencional y la culpa"
+},
+{
+  pregunta: "Establece las modalidades de la conducta punible encontrado como una de ellas la culpa, la cual debe estar establecida en el tipo penal; para identificar que una conducta es culposa basta con establecer que",
+  opciones: [
+    "cuando su resultado, siendo previsible, excede la intención del agente.",
+    "cuando el agente conoce los hechos constitutivos de la infracción penal y quiere su realización",
+    "cuando la realización de la infracción penal ha sido prevista como probable y su no producción se deja librada al azar.",
+    "cuando el resultado típico es producto de la infracción al debe objetivo de cuidado y el agente debió haberlo previsto por ser previsible, o habiéndolo previsto, confió en poder evitarlo."
+  ],
+  respuestaCorrecta: "cuando el resultado típico es producto de la infracción al debe objetivo de cuidado y el agente debió haberlo previsto por ser previsible, o habiéndolo previsto, confió en poder evitarlo."
+},
+{
+  pregunta: "Sandra, quien es esposa de Juan, tiene la intención de lesionar levemente en el rostro a su esposo, por lo que le tira encima un manojo de llaves, pero no toma en cuenta que él está recostado en el barandal del balcón de su apartamento y, al percatarse de que el objeto se dirige hacia él y tratar de esquivarlo, pierde el equilibrio y se va de balcón abajo, muriendo instantáneamente. Teniendo en cuenta las modalidades de la conducta punible, podemos decir que Sandra cometió un delito en la modalidad de:",
+  opciones: [
+    "Dolo",
+    "Culpa",
+    "Preterintencional",
+    "Tentativa"
+  ],
+  respuestaCorrecta: "Preterintencional"
+},
+{
+  pregunta: "Un mensajero que debía consignar un dinero en el banco se encuentra caminando por una calle oscura cuando un delincuente armado lo aborda y le dice que si no le entrega sus pertenencias, lo matará. El hombre, atemorizado y convencido de que está en grave peligro de muerte, decide entregar todo lo que tiene sin ofrecer resistencia. Según el artículo 32 del Código Penal, ¿Qué causal de ausencia de responsabilidad se aplica en este caso?",
+  opciones: [
+    "Coacción ajena insuperable, ya que el hombre actuó bajo la presión del delincuente.",
+    "Miedo insuperable, ya que el hombre actuó movido por un temor extremo e irresistible que le impidió actuar libremente.",
+    "Legítima defensa, ya que el hombre trató de defender su vida frente a una amenaza de muerte.",
+    "Estado de necesidad, ya que el hombre actuó para evitar el daño sin otra opción razonable."
+  ],
+  respuestaCorrecta: "Miedo insuperable, ya que el hombre actuó movido por un temor extremo e irresistible que le impidió actuar libremente."
+},
+{
+  pregunta: "De acuerdo con el Artículo 25 del Código Penal colombiano, ¿Cómo se puede cometer una conducta punible?",
+  opciones: [
+    "Mediante el cumplimiento de un deber legal, sin intención de causar daño, pero ocasionando un perjuicio a otro.",
+    "Solo mediante una acción directa que cause daño a otro, sin la necesidad de que se establezca una relación de garantía entre las partes.",
+    "Mediante acción u omisión, cuando el agente tiene la obligación de evitar un resultado y no lo hace, estando en condiciones de hacerlo.",
+    "Únicamente mediante la realización de un acto que directamente contravenga la ley penal, sin considerar el contexto de la acción."
+  ],
+  respuestaCorrecta: "Mediante acción u omisión, cuando el agente tiene la obligación de evitar un resultado y no lo hace, estando en condiciones de hacerlo."
+},
+{
+  pregunta: "Un hombre es amenazado de muerte por un delincuente armado si no comete un robo en una tienda cercana. Aunque el hombre no tiene intención de cometer el robo, teme por su vida y la de su familia, y decide seguir las órdenes del agresor. Según el artículo 32 del Código Penal, ¿Qué causal de ausencia de responsabilidad se aplica en este caso?",
+  opciones: [
+    "Estado de necesidad, ya que el hombre actuó para proteger su vida y la de su familia de un peligro inminente.",
+    "Legítima defensa, ya que el hombre estaba defendiendo a su familia de una agresión física inminente.",
+    "Coacción ajena insuperable, ya que el hombre actuó bajo una presión externa que le impedía actuar libremente.",
+    "Fuerza mayor, ya que el hombre no pudo evitar la situación de ser amenazado por el delincuente."
+  ],
+  respuestaCorrecta: "Coacción ajena insuperable, ya que el hombre actuó bajo una presión externa que le impedía actuar libremente."
+},
+{
+  pregunta: "Una persona maneja su vehículo de manera temeraria y provoca un accidente en el que daña un bien ajeno. Sin embargo, al momento del accidente, el conductor estaba actuando de esa manera porque tenía que trasladar urgentemente a un familiar al hospital debido a una emergencia médica. Según el artículo 32 del Código Penal, ¿Qué causal de ausencia de responsabilidad podría aplicarse en este caso?",
+  opciones: [
+    "Obediencia debida, ya que el conductor estaba respondiendo a una orden de un médico para llevar a su familiar al hospital.",
+    "Legítima defensa, ya que el conductor estaba protegiendo la vida de su familiar frente a una agresión inminente.",
+    "Caso fortuito, ya que el accidente fue un incidente inesperado causado por la urgencia médica.",
+    "Estado de necesidad, ya que el conductor actuó para proteger un bien jurídico superior (la salud de su familiar) y el daño causado fue proporcionado a la emergencia."
+  ],
+  respuestaCorrecta: "Estado de necesidad, ya que el conductor actuó para proteger un bien jurídico superior (la salud de su familiar) y el daño causado fue proporcionado a la emergencia."
+},
+{
+  pregunta: "Un adolescente de 16 años comete un delito, pero su desarrollo emocional y psicológico está tan retrasado que su capacidad para comprender la ilicitud de su conducta es comparable a la de un niño mucho más joven. Según el artículo 33 del Código Penal, ¿Cuál es la posible consecuencia para este adolescente?",
+  opciones: [
+    "Inimputable, debido a su inmadurez psicológica, si se demuestra que no podía comprender la ilicitud de su conducta.",
+    "Responsable penalmente, pero con una pena reducida debido a su inmadurez psicológica.",
+    "Inimputable, pero solo si su inmadurez psicológica es consecuencia de un trastorno mental.",
+    "Responsable penalmente, ya que la inmadurez psicológica no es un factor relevante para la imputabilidad."
+  ],
+  respuestaCorrecta: "Inimputable, debido a su inmadurez psicológica, si se demuestra que no podía comprender la ilicitud de su conducta."
+},
+{
+  pregunta: "Un individuo, debido a un trastorno mental grave, comete un delito sin ser consciente de que su conducta es ilícita ni de las consecuencias de su acto. Sin embargo, el individuo no tenía antecedentes de haber inducido o causado su trastorno mental. Según el artículo 33 del Código Penal, este individuo es:",
+  opciones: [
+    "Responsable penalmente, ya que no se considera inimputable por trastornos mentales.",
+    "Inimputable, ya que no tenía la capacidad de comprender la ilicitud de su conducta.",
+    "Responsable penalmente, ya que la inimputabilidad solo se aplica a menores de edad.",
+    "Inimputable, pero sólo si el trastorno mental fue preordenado por él."
+  ],
+  respuestaCorrecta: "Inimputable, ya que no tenía la capacidad de comprender la ilicitud de su conducta."
+},
+{
+  pregunta: "Un hombre es atacado por un ladrón que lo amenaza con un arma blanca para robarle. El hombre responde al ataque golpeando al ladrón con un palo de madera, causándole lesiones graves. Según el artículo 32 del Código Penal Colombiano, modificado por la Ley 2197 de 2022, ¿Cómo se debe considerar la responsabilidad penal del hombre?",
+  opciones: [
+    "El hombre será penalmente responsable, ya que causó lesiones graves, sin importar que haya sido en defensa propia.",
+    "El hombre no será penalmente responsable, ya que actuó en legítima defensa al responder a una agresión injusta y actual.",
+    "El hombre será penalmente responsable si se demuestra que la agresión con el arma blanca no era realmente peligrosa.",
+    "El hombre no será penalmente responsable si demuestra que la agresión con el cuchillo fue más grave que el golpe recibido."
+  ],
+  respuestaCorrecta: "El hombre no será penalmente responsable, ya que actuó en legítima defensa al responder a una agresión injusta y actual."
+},
+{
+  pregunta: "Una persona se encuentra en su vehículo estacionado en la vía pública. Un extraño intenta ingresar al vehículo de forma violenta y el propietario, temiendo por su seguridad, responde usando un arma de fuego para repeler la agresión, hiriendo al agresor de gravedad. Según el artículo 32 del Código Penal ¿Cómo se debe considerar la responsabilidad penal del propietario del vehículo?",
+  opciones: [
+    "El propietario será penalmente responsable, ya que usó fuerza letal sin que estuviera en peligro inmediato.",
+    "El propietario será exonerado de responsabilidad penal, ya que actuó en legítima defensa privilegiada para rechazar la agresión de un extraño que intentaba ingresar a su vehículo.",
+    "El propietario será penalmente responsable ya que no había ingresado a su vehículo.",
+    "El propietario podrá ser exonerado de responsabilidad penal solo si demuestra que el agresor tenía una intención de robar."
+  ],
+  respuestaCorrecta: "El propietario será exonerado de responsabilidad penal, ya que actuó en legítima defensa privilegiada para rechazar la agresión de un extraño que intentaba ingresar a su vehículo."
+},
+{
+  pregunta: "Un militar recibe la orden de su superior para detener a una persona que supuestamente pertenece a un grupo armado ilegal. Durante la detención, el militar comete un abuso de poder y tortura a la persona detenida, siguiendo las órdenes del superior. Según el artículo 32 del Código Penal, ¿Qué debe considerarse en relación con la obediencia debida?",
+  opciones: [
+    "El militar será exonerado de responsabilidad penal por seguir una orden legítima, ya que actuó bajo la obediencia debida.",
+    "El militar será penalmente responsable, ya que la tortura es un delito grave, y no se puede alegar obediencia debida en estos casos.",
+    "El militar será exonerado de responsabilidad penal si demuestra que la tortura fue accidental durante la detención.",
+    "El militar podrá ser exonerado de responsabilidad penal solo si la persona detenida era en realidad un miembro de un grupo armado ilegal."
+  ],
+  respuestaCorrecta: "El militar será penalmente responsable, ya que la tortura es un delito grave, y no se puede alegar obediencia debida en estos casos."
+},
+{
+  pregunta: "Juan convence a su amigo Miguel para que robe una tienda de electrónica. Juan le ofrece la información sobre el lugar y las condiciones de seguridad, pero le deja la tarea a Miguel de ejecutar el robo. Durante el robo, Miguel recibe ayuda de su primo, Pablo, quien lo espera fuera para escapar juntos. Según el Artículo 30 del Código Penal, ¿Cómo se califica la responsabilidad de Juan y Pablo?",
+  opciones: [
+    "Juan es determinador y Miguel es cómplice, ambos recibirán la pena completa por el robo.",
+    "Juan es determinador y Pablo es cómplice, Juan recibirá la pena completa y Pablo una pena disminuida.",
+    "Juan es cómplice y Pablo es determinador, ambos recibirán la pena completa por el robo.",
+    "Juan y Pablo son cómplices, ambos recibirán la pena disminuida por el robo."
+  ],
+  respuestaCorrecta: "Juan es determinador y Pablo es cómplice, Juan recibirá la pena completa y Pablo una pena disminuida."
+},
+{
+  pregunta: "Carlos y Marta, después de planear el robo de una joyería, acuerdan dividirse el trabajo. Carlos se encargará de distraer a los empleados del establecimiento, mientras Marta se encargará de tomar las joyas. Ambos acuerdan que, al final, compartirán el botín. Durante la ejecución del robo, ambos cumplen con sus roles y logran robar una gran cantidad de joyas. ¿Cómo se califica su responsabilidad en el delito?",
+  opciones: [
+    "Solo Carlos es responsable del robo, ya que fue quien distrajo a los empleados.",
+    "Solo Marta es responsable, ya que fue quien tomó las joyas.",
+    "Ninguno es responsable, ya que la responsabilidad solo recae sobre quien toma el objeto del delito.",
+    "Ambos son coautores, porque actuaron conjuntamente con un acuerdo común y división del trabajo en la comisión del delito."
+  ],
+  respuestaCorrecta: "Ambos son coautores, porque actuaron conjuntamente con un acuerdo común y división del trabajo en la comisión del delito."
+},
+{
+  pregunta: "Un individuo, un medio de un fuerte terremoto, destruye una propiedad para tener una escapatoria. Según el artículo 32 del Código Penal, ¿cómo debe ser determinada la pena?",
+  opciones: [
+    "Se le aplicará la pena del delito de hurto y no se tendrá en cuenta el daño causado.",
+    "El conductor podrá ser exonerado de toda responsabilidad si demuestra que no causó daño intencionalmente.",
+    "Se le aplicará la pena más grave, que corresponde al delito del hurto y a la destrucción de la propiedad ajena.",
+    "Se le aplicará la pena más grave, que corresponde al delito de hurto y no se tendrá en cuenta el daño causado."
+  ],
+  respuestaCorrecta: "Se le aplicará la pena más grave, que corresponde al delito de hurto y no se tendrá en cuenta el daño causado."
+},
+{
+  pregunta: "Un conductor, al transitar por una carretera, se ve repentinamente afectado por un deslizamiento de tierra debido a un desastre natural. Para evitar quedar atrapado, el conductor choca contra otro vehículo, causando daños materiales a un tercero. Según el artículo 32 del Código Penal ¿Cómo debe tratarse la responsabilidad penal de este conductor?",
+  opciones: [
+    "El conductor será penalmente responsable por el daño causado, ya que el accidente fue consecuencia de su mala conducción.",
+    "El conductor no será penalmente responsable, pues actuó bajo un evento de fuerza mayor, que fue el deslizamiento de tierra inesperado.",
+    "El conductor podrá ser exonerado de responsabilidad penal, pero solo si puede demostrar que no causó daño de forma intencional.",
+    "El conductor será responsable, pero podría solicitar una reducción de la pena, ya que el daño fue provocado por un caso fortuito."
+  ],
+  respuestaCorrecta: "El conductor no será penalmente responsable, pues actuó bajo un evento de fuerza mayor, que fue el deslizamiento de tierra inesperado."
+},
+{
+  pregunta: "Quien contribuya a la realización de la conducta antijurídica o preste una ayuda posterior, por concierto previo o concomitante a la misma, incurrirá en la pena prevista para la correspondiente infracción disminuida de una sexta parte a la mitad. Se refiere a",
+  opciones: [
+    "Interviniente",
+    "Cómplice",
+    "Determinador",
+    "Instrumento"
+  ],
+  respuestaCorrecta: "Cómplice"
+},
+{
+  pregunta: "El que no tenga las calidades especiales exigidas en el tipo penal concurra en su realización, se le rebajará la pena en una cuarta parte. Se refiere a:",
+  opciones: [
+    "Cómplice",
+    "Interviniente",
+    "Determinador",
+    "Conspirador"
+  ],
+  respuestaCorrecta: "Interviniente"
+},
+{
+  pregunta: "De quien es competencia la medida correctiva de 'reparación de daños materiales por perturbación a la posesión y tenencia de inmuebles o muebles'?",
+  opciones: [
+    "Alcalde",
+    "Inspector y corregidor de policía",
+    "Policía nacional",
+    "Autoridad especial"
+  ],
+  respuestaCorrecta: "Inspector y corregidor de policía"
+},
+{
+  pregunta: "Prohibición de ingreso de actividad que involucra aglomeraciones de público complejas y no complejas...",
+  opciones: [
+    "Impedir el ingreso de la persona entre 3 meses y 2 años",
+    "Impedir el ingreso de la persona entre 6 meses y 3 años",
+    "Impedir el ingreso de la persona entre 1 mes y 1 año",
+    "Impedir el ingreso de la persona entre 12 meses y 3 años"
+  ],
+  respuestaCorrecta: "Impedir el ingreso de la persona entre 6 meses y 3 años"
+},
+{
+  pregunta: "Resolver los impedimentos y recusaciones de las autoridades de Policía de primera instancia, es competencia de la siguiente autoridad de policía",
+  opciones: [
+    "Inspectores y corregidores de policía",
+    "Gobernador",
+    "Alcalde",
+    "Comandantes de estación, subestación, caí y delegados."
+  ],
+  respuestaCorrecta: "Alcalde"
+},
+{
+  pregunta: "Un conductor de bus, en un momento de distracción, atropella a un peatón que cruza la calle de manera indebida. Aunque el conductor no tenía la intención de causar daño, su falta de atención al volante es la causa del accidente. Según el Artículo 21 del Código Penal colombiano, ¿cómo se clasifica la conducta del conductor?",
+  opciones: [
+    "Conducta dolosa, porque el conductor actuó con la intención de causar el daño al peatón.",
+    "Conducta preterintencional, porque el conductor no quería causar daño, pero el atropello resultó más grave de lo esperado.",
+    "No es una conducta punible, ya que el conductor no tenía la intención de causar daño.",
+    "Conducta culposa, ya que el conductor actuó sin intención, pero de forma imprudente."
+  ],
+  respuestaCorrecta: "Conducta culposa, ya que el conductor actuó sin intención, pero de forma imprudente."
+},
+{
+  pregunta: "Las causales de ausencia de responsabilidad se refieren a las justificaciones de la conducta bajo las que:",
+  opciones: [
+    "El sujeto activo tiene que indemnizar a la víctima",
+    "La responsabilidad penal será diferida en el tiempo",
+    "No abra lugar a responsabilidad penal",
+    "El estado otorga el principio de oportunidad"
+  ],
+  respuestaCorrecta: "No abra lugar a responsabilidad penal"
+},
+{
+  pregunta: "Un individuo, en medio de un fuerte terremoto, destruye la propiedad de una persona ajena para resguardarse de los escombros y salvar su vida. Debido a la magnitud del desastre, no había forma de evitar el daño sin exponerse a un peligro mayor. Según el artículo 32 del Código Penal ¿Qué se debe considerar respecto a la responsabilidad penal de esta persona?",
+  opciones: [
+    "La persona será penalmente responsable porque la destrucción de la propiedad fue deliberada, independientemente de la emergencia.",
+    "La persona no será penalmente responsable, ya que actuó bajo un evento de fuerza mayor que impidió evitar la destrucción.",
+    "La persona será exonerada de responsabilidad penal por haber actuado sin intención, pero solo si la destrucción fue menor.",
+    "La persona será exonerada de responsabilidad penal, pero solamente si pudo demostrar que su acción fue fruto de faltar a deber objetivo de cuidado"
+  ],
+  respuestaCorrecta: "La persona no será penalmente responsable, ya que actuó bajo un evento de fuerza mayor que impidió evitar la destrucción."
+},
+{
+  pregunta: "En un proceso penal por corrupción, se investiga a un contratista privado que manejó recursos públicos destinados a la educación. Según el Código Penal colombiano, ¿cómo debe ser tratado este contratista en relación con su calidad de servidor público?",
+  opciones: [
+    "No es considerado servidor público, ya que no tiene un nombramiento oficial dentro de una entidad estatal.",
+    "Es considerado servidor público, porque administró recursos públicos, aunque sea un particular.",
+    "Solo es servidor público si su contrato con el Estado tenía una duración superior a un año.",
+    "No es una conducta punible, ya que los particulares no pueden ser procesados por delitos contra la administración pública."
+  ],
+  respuestaCorrecta: "Es considerado servidor público, porque administró recursos públicos, aunque sea un particular."
+},
+{
+  pregunta: "Carlos, al intentar robar un banco, se coloca una máscara y un arma en la mano. Cuando entra al establecimiento y se dirige hacia la caja fuerte, se da cuenta de que la policía ya había sido alertada por una llamada anónima. En ese momento, Carlos huye del lugar sin haber logrado abrir la caja. Según el Artículo 27 del Código Penal, ¿cómo se califica la conducta de Carlos?",
+  opciones: [
+    "Acción u omisión, porque Carlos actuó pero no cumplió con su objetivo debido a su omisión.",
+    "Dolo, porque Carlos tenía la intención de cometer el delito de robo.",
+    "Tentativa, porque Carlos comenzó a ejecutar actos idóneos e inequívocos dirigidos a la consumación del robo, pero no lo consumó por circunstancias ajenas a su voluntad.",
+    "Culpa, porque Carlos no logró consumar el delito debido a su falta de habilidad para abrir la caja fuerte."
+  ],
+  respuestaCorrecta: "Tentativa, porque Carlos comenzó a ejecutar actos idóneos e inequívocos dirigidos a la consumación del robo, pero no lo consumó por circunstancias ajenas a su voluntad."
+},
+{
+  pregunta: "¿Cuáles de las siguientes son medidas correctivas establecidas por el Código Nacional de Seguridad y Convivencia Ciudadana?",
+  opciones: [
+    "Destrucción de bien - Suspensión temporal de actividad - Traslado por protección - Registro a persona",
+    "Suspensión definitiva de actividad - Incautación – Demolición de obra – Decomiso - multas",
+    "Suspensión inmediata de actividad - Suspensión temporal de actividad - Expulsión de domicilio",
+    "Suspensión temporal de actividad - Destrucción de bien - Suspensión definitiva de actividad – multas"
+  ],
+  respuestaCorrecta: "Suspensión temporal de actividad - Destrucción de bien - Suspensión definitiva de actividad – multas"
+},
+{
+  pregunta: "Según el artículo 10, ¿cuál es la principal responsabilidad del comandante de la región de policía?",
+  opciones: [
+    "Dirigir las operaciones únicamente en las áreas rurales de su jurisdicción.",
+    "Ejecutar el direccionamiento estratégico y el desarrollo operacional de los servicios de policía en su jurisdicción, siguiendo los lineamientos de la Jefatura Nacional del Servicio de Policía.",
+    "Supervisar exclusivamente la capacitación de los oficiales de policía en las academias.",
+    "Gestionar la relación entre los municipios y los comandos operativos de seguridad ciudadana."
+  ],
+  respuestaCorrecta: "Ejecutar el direccionamiento estratégico y el desarrollo operacional de los servicios de policía en su jurisdicción, siguiendo los lineamientos de la Jefatura Nacional del Servicio de Policía."
+},
+{
+  pregunta: "¿Cuál de las siguientes unidades de la Policía Nacional está encargada de ejercer control policial en sitios geográficos rurales, tales como corregimientos, inspecciones de policía, caseríos o veredas?",
+  opciones: [
+    "Comando Operativo de Seguridad Ciudadana",
+    "Subestación de Policía",
+    "Puesto de Policía",
+    "Policía Metropolitana"
+  ],
+  respuestaCorrecta: "Puesto de Policía"
+},
+{
+  pregunta: "En una Policía Metropolitana con alto índice de criminalidad y expansión territorial, se propone crear dos Comandos Operativos de Seguridad Ciudadana para mejorar el control. Según la normativa, ¿qué implicaciones tendría esta decisión?",
+  opciones: [
+    "La creación de los comandos implicaría una reorganización de las estaciones y CAI, pero no afectaría la estructura de los distritos.",
+    "La creación de los comandos permitiría la eliminación de los distritos, subordinando las estaciones, subestaciones y CAI a los nuevos comandos operativos.",
+    "La creación de los comandos operativos es solo posible si se autoriza la incorporación de nuevos puestos de policía.",
+    "La creación de los comandos operativos no afectaría la estructura jerárquica de las unidades existentes en la jurisdicción."
+  ],
+  respuestaCorrecta: "La creación de los comandos permitiría la eliminación de los distritos, subordinando las estaciones, subestaciones y CAI a los nuevos comandos operativos."
+},
+
+                    // Agrega más preguntas para el Nivel 1 aquí
+                ]
+            },
+            {
+                nivel: 2,
+                preguntas: [
+                {
+  pregunta: "Según el Artículo 25 del Código Penal colombiano, ¿Cuál de las siguientes situaciones es una posición de garantía que podría hacer punible una omisión?",
+  opciones: [
+    "Una persona que, al estar cerca de un accidente, decide no ayudar, ya que no tiene obligación de intervenir.",
+    "Un conductor que, al ver a un peatón cruzando ilegalmente, decide acelerar para evitar el retraso en su trayecto.",
+    "Un padre que, al ver que su hijo se ahoga en una piscina, decide no intervenir porque considera que el niño puede resolverlo solo.",
+    "Un enfermero que, al ver a un paciente con una herida grave, decide no aplicarle primeros auxilios porque no es parte de su trabajo."
+  ],
+  respuestaCorrecta: "Un padre que, al ver que su hijo se ahoga en una piscina, decide no intervenir porque considera que el niño puede resolverlo solo."
+},
+{
+  pregunta: "Un servidor público, en el ejercicio de sus funciones, comete un delito de abuso de autoridad. Un particular, sabiendo de la conducta ilícita del servidor, le ofrece ayuda para que continúe con la comisión del delito. El servidor acepta y ambos cometen el ilícito.De acuerdo con el Código Penal Colombiano, ¿Cuál de las siguientes afirmaciones es correcta respecto al particular que ayuda al servidor público en la realización del delito?",
+  opciones: [
+    "El particular no será responsable penalmente por su intervención en el delito, ya que su colaboración no fue una acción directa del servidor público.",
+    "El particular será considerado como autor principal del delito, dado que su acción fue determinante para la comisión del hecho ilícito.",
+    "El particular podría recibir una rebaja en su pena de hasta una cuarta parte, debido a que no tiene las calidades especiales exigidas en el tipo penal correspondiente."
+  ],
+  respuestaCorrecta: "El particular podría recibir una rebaja en su pena de hasta una cuarta parte, debido a que no tiene las calidades especiales exigidas en el tipo penal correspondiente."
+},
+{
+  pregunta: "De acuerdo con el Artículo 21 del Código Penal colombiano, ¿cuál de las siguientes afirmaciones es correcta en relación con las modalidades de la conducta punible?",
+  opciones: [
+    "La culpa y la preterintención son punibles en todos los casos, sin importar el tipo de delito.",
+    "La culpa es siempre más grave que el dolo en cuanto a responsabilidad penal.",
+    "La culpa y la preterintención solo son punibles en los casos expresamente señalados por la ley.",
+    "La preterintención es punible únicamente en delitos de acción dolosa."
+  ],
+  respuestaCorrecta: "La culpa y la preterintención solo son punibles en los casos expresamente señalados por la ley."
+},
+{
+  pregunta: "Un ciudadano es sorprendido hurtando un producto de bajo valor en una tienda. La policía lo captura en flagrancia, y al revisar su historial, se encuentra que no tiene antecedentes penales. Según el Código Penal colombiano, ¿cómo se debe clasificar su conducta y cuál sería la posible consecuencia legal?",
+  opciones: [
+    "Delito, porque el hurto, sin importar el monto.",
+    "Contravención, ya que al ser un hecho de menor gravedad y no tener antecedentes, solo se impondría una multa.",
+    "No es una conducta punible, pues si el valor del objeto es bajo, no se considera un hecho sancionable penalmente."
+  ],
+  respuestaCorrecta: "Delito, porque el hurto, sin importar el monto."
+},
+{
+  pregunta:"Artículo 21 del Código Penal colombiano, ¿cuáles son las modalidades de la conducta punible?",
+  opciones: [
+    "Delito, contravención y falta.",
+    "Acción, omisión y comisión.",
+    "Responsabilidad, imputabilidad y culpabilidad.",
+    "Dolo, culpa y preterintención."
+  ],
+  respuestaCorrecta: "Dolo, culpa y preterintención."
+},
+{
+  pregunta: "Laura, en una conversación con su amiga Andrea, le sugiere que robe un bolso en una tienda de lujo. Laura le da detalles sobre cómo evitar que las cámaras de seguridad la detecten y le recomienda la mejor hora para hacerlo. Andrea, siguiendo los consejos de Laura, decide robar el bolso y lo hace con éxito. Según el Artículo 30 del Código Penal, ¿Cómo se califica la responsabilidad de Laura y Andrea?",
+  opciones: [
+    "Laura es autora y Andrea es cómplice, Laura recibirá la pena completa y Andrea una pena disminuida.",
+    "Laura es determinadora y Andrea es autora, Laura recibirá la pena completa y Andrea también la pena completa.",
+    "Laura es determinadora y Andrea es autora, ambas recibirán la misma pena.",
+    "Laura es cómplice y Andrea es autora, Laura recibirá una pena disminuida y Andrea la pena completa."
+  ],
+  respuestaCorrecta: "Laura es determinadora y Andrea es autora, ambas recibirán la misma pena."
+},
+{
+  pregunta: "¿Según el Artículo 28 del Código Penal, ¿Quiénes concurren en la realización de una conducta punible?",
+  opciones: [
+    "Solo los autores y los cómplices, ya que son los únicos responsables directos del delito.",
+    "Los autores y los partícipes, ya que ambos tienen algún grado de responsabilidad en la comisión del delito.",
+    "Solo los partícipes y coautores, porque son quienes colaboran en la ejecución del crimen.",
+    "Solo los cómplices y partícipes, ya que son quienes tienen la mayor responsabilidad en el delito."
+  ],
+  respuestaCorrecta: "Los autores y los partícipes, ya que ambos tienen algún grado de responsabilidad en la comisión del delito."
+},
+{
+  pregunta: "De acuerdo con el Artículo 26 del Código Penal colombiano, ¿en qué momento se considera que se ha realizado una conducta punible?",
+  opciones: [
+    "En el momento en que el resultado de la conducta se manifiesta, independientemente de cuándo ocurrió la acción o la omisión.",
+    "En el momento en que la acción o la omisión debió haber ocurrido, aunque el resultado se haya producido en otro momento posterior.",
+    "Solo en el momento en que se comete la acción ilícita, sin importar si el resultado ocurre posteriormente.",
+    "En el instante en que se produce el daño, sin tener en cuenta si el agente estaba en condiciones de evitarlo o no."
+  ],
+  respuestaCorrecta: "En el momento en que la acción o la omisión debió haber ocurrido, aunque el resultado se haya producido en otro momento posterior."
+},
+{
+  pregunta: "Un hombre de una comunidad rural, donde es común utilizar métodos tradicionales de resolución de conflictos, comete un acto que en la legislación estatal se considera un delito. Sin embargo, él actuó bajo la creencia de que su acción estaba permitida dentro de las normas de su comunidad, que no reconoce la ilicitud del acto según las leyes del Estado. Según el artículo 33 del Código Penal, este individuo podría ser considerado:",
+  opciones: [
+    "Inimputable, debido a su contexto sociocultural, si no comprendió la ilicitud de su conducta.",
+    "Responsable penalmente, ya que las leyes del Estado prevalecen sobre las normas socioculturales.",
+    "Inimputable, solo si se prueba que la comunidad tiene costumbres que se contradicen con la ley.",
+    "Responsable penalmente, pero con una pena reducida debido a su desconocimiento de las leyes del Estado."
+  ],
+  respuestaCorrecta: "Inimputable, debido a su contexto sociocultural, si no comprendió la ilicitud de su conducta."
+},
+{
+  pregunta: "Una persona ve que una banca de parque está siendo devastada por un incendio que amenaza con expandirse hacia un edificio cercano, causando daños materiales graves. Sin tiempo de esperar a los bomberos, la persona rompe la puerta del edificio para salvar a los ocupantes del peligro, aunque ocasiona daños en la propiedad. Según el artículo 32 del Código, ¿qué causal de ausencia de responsabilidad se aplica en este caso?",
+  opciones: [
+    "Obediencia debida, ya que la persona actuó para cumplir con una obligación legal de prevenir los daños.",
+    "Estado de necesidad, ya que la persona actuó para proteger un bien jurídico superior (la vida de las personas) frente a un peligro inminente, sin que tuviera otra opción razonable.",
+    "Legítima defensa, ya que la persona respondió a un ataque inminente contra los derechos ajenos.",
+    "Caso fortuito, ya que la persona no pudo evitar la situación de emergencia en la que se encontraba."
+  ],
+  respuestaCorrecta: "Estado de necesidad, ya que la persona actuó para proteger un bien jurídico superior (la vida de las personas) frente a un peligro inminente, sin que tuviera otra opción razonable."
+},
+{
+  pregunta: "En un barrio residencial, un ciudadano es sorprendido arrojando basura en un espacio público, infringiendo una norma municipal. Según el Código Penal colombiano, esta conducta punible sería clasificada como:",
+  opciones: [
+    "Un delito, ya que atenta contra el medio ambiente y la salud pública.",
+    "Una contravención, pues es una falta menor sancionada con multa.",
+    "Un delito, debido a que cualquier incumplimiento normativo es sancionado penalmente.",
+    "no es un delito ni una contravención, ya que solo las acciones violentas son conductas punibles."
+  ],
+  respuestaCorrecta: "Una contravención, pues es una falta menor sancionada con multa."
+},
+{
+  pregunta: "María, al intentar cometer un robo en una tienda, entra al establecimiento con un cuchillo en mano. Se dirige a la caja registradora y exige el dinero, pero en ese momento, un cliente entra y la distrae, lo que provoca que María se asuste y decida salir corriendo antes de llevar a cabo el robo. Según el Artículo 27 del Código Penal, ¿cómo se califica la conducta de María?",
+  opciones: [
+    "Se configura la tentativa de delito, ya que María comenzó la ejecución del robo mediante actos idóneos e inequívocos dirigidos a su consumación.",
+    "No se configura tentativa, ya que María no utilizó un arma en el intento de robo.",
+    "No se configura tentativa, ya que María desistió de cometer el delito antes de que se consumara.",
+    "Se configura la tentativa de delito solo si María había tomado el dinero de la caja registradora."
+  ],
+  respuestaCorrecta: "Se configura la tentativa de delito, ya que María comenzó la ejecución del robo mediante actos idóneos e inequívocos dirigidos a su consumación."
+},
+{
+  pregunta: "Carlos, al estar en desacuerdo con la dirección de su empresa, decide que su compañero de trabajo, Luis, robe documentos confidenciales del área administrativa. Carlos amenaza a Luis con matarlo si no lo hace y procede a entregarle las llaves del archivo a Luis y le explica cómo acceder a los documentos. Luis, siguiendo las instrucciones de Carlos, lleva a cabo el robo. Según el Artículo 29 del Código Penal, ¿quién es considerado autor del delito de robo?",
+  opciones: [
+    "Solo Luis, ya que fue quien ejecutó el robo.",
+    "Solo Carlos, ya que fue quien planificó el robo y utilizó a Luis como instrumento.",
+    "Ambos, porque tanto Luis como Carlos tienen un grado de responsabilidad en la realización del delito.",
+    "Ninguno, porque el delito fue ejecutado por Luis, sin que Carlos participara directamente."
+  ],
+  respuestaCorrecta: "Solo Carlos, ya que fue quien planificó el robo y utilizó a Luis como instrumento."
+},
+{
+  pregunta: "Un funcionario del Banco de la República es acusado de filtrar información confidencial sobre políticas monetarias a un grupo de inversionistas privados. En su defensa, argumenta que, al no ser empleado directo del Estado, no puede ser considerado servidor público. Según el Código Penal colombiano, ¿cómo debe resolverse este caso?",
+  opciones: [
+    "No es servidor público, porque el Banco de la República es una entidad autónoma e independiente del Gobierno.",
+    "Solo sería servidor público si su cargo implica tomar decisiones sobre recursos estatales.",
+    "Es servidor público, porque el Artículo 20 del Código Penal lo incluye expresamente en esta categoría.",
+    "No es una conducta punible, ya que divulgar información financiera no está regulado penalmente."
+  ],
+  respuestaCorrecta: "Es servidor público, porque el Artículo 20 del Código Penal lo incluye expresamente en esta categoría."
+},
+{
+  pregunta: "Según el Código Penal ley 599 de 2000, las conductas punibles se dividen en:",
+  opciones: [
+    "Dolosas y culposas, dependiendo de la intención del infractor.",
+    "Graves y leves, según el impacto que generan en la sociedad.",
+    "Delitos y contravenciones, de acuerdo con su gravedad y las sanciones aplicables.",
+    "Penales y administrativas, según la autoridad encargada de imponer la sanción."
+  ],
+  respuestaCorrecta: "Delitos y contravenciones, de acuerdo con su gravedad y las sanciones aplicables."
+},
+{
+  pregunta: "Según el artículo 32 del Código Penal, ¿Qué causal de ausencia de responsabilidad podría aplicarse en este caso?",
+  opciones: [
+    "Obediencia debida, ya que el conductor estaba respondiendo a una orden de un médico para llevar a su familiar al hospital.",
+    "Legítima defensa, ya que el conductor estaba protegiendo la vida de su familiar frente a una agresión inminente.",
+    "Caso fortuito, ya que el accidente fue un incidente inesperado causado por la urgencia médica.",
+    "Estado de necesidad, ya que el conductor actuó para proteger un bien jurídico superior (la salud de su familiar) y el daño causado fue proporcionado a la emergencia."
+  ],
+  respuestaCorrecta: "Estado de necesidad, ya que el conductor actuó para proteger un bien jurídico superior (la salud de su familiar) y el daño causado fue proporcionado a la emergencia."
+},
+{
+  pregunta: "Juan convence a su amigo Miguel para que robe una tienda de electrónica. Juan le ofrece la información sobre el lugar y las condiciones de seguridad, pero le deja la tarea a Miguel de ejecutar el robo. Durante el robo, Miguel recibe ayuda de su primo, Pablo, quien lo espera fuera para escapar juntos. Según el Artículo 30 del Código Penal, ¿Cómo se califica la responsabilidad de Juan y Pablo?",
+  opciones: [
+    "Juan es determinador y Miguel es cómplice, ambos recibirán la pena completa por el robo.",
+    "Juan es determinador y Pablo es cómplice, Juan recibirá la pena completa y Pablo una pena disminuida.",
+    "Juan es cómplice y Pablo es determinador, ambos recibirán la pena completa por el robo.",
+    "Juan y Pablo son cómplices, ambos recibirán la pena disminuida por el robo."
+  ],
+  respuestaCorrecta: "Juan es determinador y Pablo es cómplice, Juan recibirá la pena completa y Pablo una pena disminuida."
+},
+{
+  pregunta: "Carlos y Marta, después de planear el robo de una joyería, acuerdan dividirse el trabajo. Carlos se encargará de distraer a los empleados del establecimiento, mientras Marta se encargará de tomar las joyas. Ambos acuerdan que, al final, compartirán el botín. Durante la ejecución del robo, ambos cumplen con sus roles y logran robar una gran cantidad de joyas. ¿Cómo se califica su responsabilidad en el delito?",
+  opciones: [
+    "Solo Carlos es responsable del robo, ya que fue quien distrajo a los empleados.",
+    "Solo Marta es responsable, ya que fue quien tomó las joyas.",
+    "Ambos son coautores, porque actuaron conjuntamente con un acuerdo común y división del trabajo en la comisión del delito.",
+    "Ninguno es responsable, ya que la responsabilidad solo recae sobre quien toma el objeto del delito."
+  ],
+  respuestaCorrecta: "Ambos son coautores, porque actuaron conjuntamente con un acuerdo común y división del trabajo en la comisión del delito."
+},
+{
+  pregunta: "Un individuo, en un solo acto, comete los delitos de hurto (con pena de 6 años) y fraude (con pena de 4 años). Según el artículo 31 del Código Penal, ¿Cómo debe ser determinada la pena para este individuo?",
+  opciones: [
+    "Se le aplicará la pena por el delito de hurto y no se tendrá en cuenta el delito de fraude.",
+    "Se le aplicará la pena por el delito de fraude, ya que es el de menor gravedad.",
+    "Se le aplicará la pena más grave, que corresponde al delito de hurto, y se aumentará hasta en otro tanto.",
+    "Se le aplicará la pena más grave, que corresponde al delito de hurto, pero no se podrá aumentar."
+  ],
+  respuestaCorrecta: "Se le aplicará la pena más grave, que corresponde al delito de hurto, y se aumentará hasta en otro tanto."
+},
+{
+  pregunta: "Un conductor, al transitar por una carretera, se ve repentinamente afectado por un deslizamiento de tierra debido a un desastre natural. Para evitar quedar atrapado, el conductor choca contra otro vehículo, causando daños materiales a un tercero. Según el artículo 32 del Código Penal ¿Cómo debe tratarse la responsabilidad penal de este conductor?",
+  opciones: [
+    "El conductor será penalmente responsable por el daño causado, ya que el accidente fue consecuencia de su mala conducción.",
+    "El conductor no será penalmente responsable, pues actuó bajo un evento de fuerza mayor, que fue el deslizamiento de tierra inesperado.",
+    "El conductor podrá ser exonerado de responsabilidad penal, pero solo si puede demostrar que no causó daño de forma intencional.",
+    "El conductor será responsable, pero podría solicitar una reducción de la pena, ya que el daño fue provocado por un caso fortuito."
+  ],
+  respuestaCorrecta: "El conductor no será penalmente responsable, pues actuó bajo un evento de fuerza mayor, que fue el deslizamiento de tierra inesperado."
+},
+{
+  pregunta: "Un policía durante un operativo de detención realiza el uso de la fuerza para reducir a un individuo que está cometiendo un delito grave. El policía actúa conforme a las normas legales que le permiten usar la fuerza en esta situación. Según el artículo 32 del Código, sin embargo, es denunciado por lesiones personales y abuso de autoridad. ¿Cómo debe ser tratada la responsabilidad penal del policía?",
+  opciones: [
+    "El policía será penalmente responsable, ya que el uso de la fuerza, aunque legal, puede ocasionar daños no deseados.",
+    "El policía no será penalmente responsable, ya que actuó en estricto cumplimiento de un deber legal dentro de su función.",
+    "El policía podrá ser penalmente responsable solo si el uso de la fuerza fue excesivo, aún si actuaba bajo un deber legal.",
+    "El policía será responsable únicamente si el individuo no estaba cometiendo un delito grave, independientemente de la fuerza utilizada."
+  ],
+  respuestaCorrecta: "El policía será responsable únicamente si el individuo no estaba cometiendo un delito grave, independientemente de la fuerza utilizada."
+},
+{
+  pregunta: "De acuerdo con el Código Penal colombiano, ¿de qué manera se puede cometer una conducta punible?",
+  opciones: [
+    "Únicamente mediante un acto intencional que cause un daño a otra persona, sin necesidad de que se haya establecido un vínculo legal o de responsabilidad.",
+    "A través de la acción u omisión, cuando el agente tiene el deber de evitar un resultado y no lo hace, aun estando en capacidad de impedirlo.",
+    "Solo a través de un acto ilícito cometido con dolo, sin considerar si se tiene o no un deber de protección sobre el bien jurídico afectado.",
+    "Solo mediante la omisión, en aquellos casos en los que el agente no tiene ninguna obligación jurídica de evitar el daño."
+  ],
+  respuestaCorrecta: "A través de la acción u omisión, cuando el agente tiene el deber de evitar un resultado y no lo hace, aun estando en capacidad de impedirlo."
+},
+{
+  pregunta: "Un bombero, al responder a un incendio en un edificio, rompe la puerta de un apartamento para rescatar a una persona atrapada dentro. Durante la intervención, el bombero causa daños en la propiedad ajena. Según el artículo 32 del Código Penal Colombiano ¿Cómo debe ser tratada la responsabilidad penal del bombero?",
+  opciones: [
+    "El bombero será penalmente responsable por el daño causado a la propiedad, ya que la ley no permite que se cause daño a la propiedad ajena, incluso por un motivo de rescate.",
+    "El bombero no será penalmente responsable, ya que actuó en estricto cumplimiento de un deber legal para salvar una vida, lo que justifica su actuación.",
+    "El bombero podrá ser penalmente responsable, pero solo si no se pudo demostrar que la vida estaba en peligro real al momento de la intervención.",
+    "El bombero será responsable por los daños, pero podrá solicitar una reducción de la pena por haber actuado con la intención de salvar a una persona."
+  ],
+  respuestaCorrecta: "El bombero no será penalmente responsable, ya que actuó en estricto cumplimiento de un deber legal para salvar una vida, lo que justifica su actuación."
+},
+{
+  pregunta: "Según el Artículo 26 del Código Penal colombiano, ¿Cuándo se considera que se ha cometido una conducta punible?",
+  opciones: [
+    "Cuando el agente lleva a cabo la acción o la omisión que da lugar al resultado, independientemente de cuándo este ocurra.",
+    "Cuando el resultado de la conducta se produce, sin importar si la acción u omisión debió haberse realizado antes o después.",
+    "Cuando la acción o la omisión es ejecutada en el tiempo que debió haber tenido lugar, incluso si el resultado ocurre más tarde.",
+    "Solo cuando el resultado de la conducta coincide con el momento exacto de la ejecución de la acción, sin tomar en cuenta si hubo una omisión previa."
+  ],
+  respuestaCorrecta: "Cuando la acción o la omisión es ejecutada en el tiempo que debió haber tenido lugar, incluso si el resultado ocurre más tarde."
+},
+{
+  pregunta: "Quien contribuya a la realización de la conducta antijurídica o preste una ayuda posterior, por concierto previo o concomitante a la misma, incurrirá en la pena prevista para la correspondiente infracción disminuida de una sexta parte a la mitad. Se refiere a",
+  opciones: [
+    "Interviniente",
+    "Cómplice",
+    "Determinador",
+    "Instrumento"
+  ],
+  respuestaCorrecta: "Cómplice"
+},
+{
+  pregunta: "Durante un estado de conmoción interior declarado en el país, el presidente emite un decreto que suspende...",
+  opciones: ["El derecho a la vida.", "El derecho a la integridad personal.", "El derecho a la libertad de expresión.", "El derecho al debido proceso."],
+  respuestaCorrecta: "El derecho a la libertad de expresión."
+},
+{
+  pregunta: "Durante un estado de conmoción interior declarado en el país, el presidente emite un decreto que suspende indefinidamente el derecho al debido proceso y ordena detenciones sin orden judicial, justificando que se trata de una medida necesaria para garantizar la seguridad nacional. Según el artículo 214 de la Constitución, ¿por qué este decreto vulnera el orden constitucional?",
+  opciones: ["Porque durante los estados de excepción no se pueden modificar las normas presupuestales.", "Porque la Constitución prohíbe restringir derechos humanos como el debido proceso, incluso en estados de excepción.", "Porque la Corte Suprema de Justicia debe aprobar previamente todo decreto presidencial.", "Porque solo el Congreso puede declarar estados de excepción en materia judicial."],
+  respuestaCorrecta: "Porque la Constitución prohíbe restringir derechos humanos como el debido proceso, incluso en estados de excepción."
+},
+{
+  pregunta: "Un ciudadano presenta una propuesta ante la alcaldía para crear un programa de ayuda alimentaria para personas en situación de pobreza. Sin embargo, el alcalde responde que el Estado no tiene por qué garantizar condiciones de vida dignas a los más necesitados, y que eso debe ser responsabilidad exclusiva de organizaciones privadas. ¿Qué principio fundamental, consagrado en el artículo 1 de la Constitución, está desconociendo el alcalde?",
+  opciones: ["El principio de legalidad del gasto público", "El carácter republicano del Estado colombiano", "El principio de solidaridad y el Estado social de derecho", "La centralización y jerarquía normativa"],
+  respuestaCorrecta: "El principio de solidaridad y el Estado social de derecho"
+},
+{
+  pregunta: "Un grupo de ciudadanos quiere proponer un proyecto de ley que establezca medidas más estrictas contra la corrupción. Se organizan, recogen firmas y lo presentan ante el Congreso, pero una funcionaria les dice que \"eso solo lo pueden hacer los congresistas o el Presidente\". Según el artículo 103 de la Constitución, ¿por qué la afirmación de la funcionaria es incorrecta?",
+  opciones: ["Porque el pueblo puede presentar leyes solo si son sobre temas económicos.", "Porque los ciudadanos pueden ejercer iniciativa legislativa mediante mecanismos de participación.", "Porque solo los alcaldes pueden presentar proyectos al Congreso con firmas ciudadanas.", "Porque la Constitución no permite que se legisle desde fuera del Congreso."],
+  respuestaCorrecta: "Porque los ciudadanos pueden ejercer iniciativa legislativa mediante mecanismos de participación."
+},
+{
+  pregunta: "Un colectivo ciudadano promueve un referendo para aprobar una reforma que establezca la gratuidad total de la educación superior pública en Colombia. Recogen las firmas requeridas y cumplen con los trámites legales. Sin embargo, una autoridad electoral les dice que no pueden convocarlo porque \"solo el Congreso puede reformar políticas nacionales\". ¿Por qué esta afirmación contradice lo dispuesto en el artículo 103 de la Constitución?",
+  opciones: ["Porque el referendo es un mecanismo exclusivo del Gobierno Nacional.", "Porque el referendo permite que el pueblo decida directamente sobre reformas legales o constitucionales.", "Porque las políticas de educación no pueden ser objeto de participación ciudadana.", "Porque el Congreso no necesita tener en cuenta la voluntad popular para legislar."],
+  respuestaCorrecta: "Porque el referendo permite que el pueblo decida directamente sobre reformas legales o constitucionales."
+},
+{
+  pregunta: "Un ciudadano presenta un derecho de petición solicitando que se arregle el parque del barrio, que está deteriorado. La alcaldía responde que solo están obligados a contestar peticiones de tipo particular. Según la Ley 1755 de 2015, ¿cuál es el error en la respuesta de la alcaldía?",
+  opciones: ["Solo el Ministerio puede responder sobre espacios públicos.", "Las peticiones de interés general también deben ser respondidas.", "Las alcaldías solo responden a tutelas, no a derechos de petición.", "El ciudadano debe pertenecer a una junta comunal para hacer esa petición."],
+  respuestaCorrecta: "Las peticiones de interés general también deben ser respondidas."
+},
+{
+  pregunta: "María solicita por escrito a una empresa de seguridad privada información sobre los datos personales que ellos manejan de ella. La empresa se niega a responder, diciendo que como no son entidad pública, no están obligados. De acuerdo con la Ley 1755 de 2015, ¿por qué esta negativa es incorrecta?",
+  opciones: ["Porque las empresas privadas deben responder peticiones si están involucradas en temas laborales.", "Porque las entidades privadas también están obligadas a responder peticiones relacionadas con datos personales.", "Porque cualquier empresa debe responder por orden directa del Congreso.", "Porque María está obligada a acudir primero a una entidad estatal."],
+  respuestaCorrecta: "Porque las entidades privadas también están obligadas a responder peticiones relacionadas con datos personales."
+},
+{
+  pregunta: "Pedro presenta un derecho de petición ante una entidad pública, pero no incluye su dirección de notificación. La entidad decide no responder, argumentando que la solicitud está incompleta. Según la Ley 1755 de 2015, ¿cuál debió ser la actuación correcta de la entidad?",
+  opciones: ["Rechazar de inmediato la petición por falta de requisitos formales.", "Responder solo si el contenido es de interés general.", "Requerir al peticionario para que complete la información en un plazo razonable.", "Trasladar el derecho de petición a otra entidad para su estudio."],
+  respuestaCorrecta: "Requerir al peticionario para que complete la información en un plazo razonable."
+},
+{
+  pregunta: "Un ciudadano se acerca personalmente a una oficina de tránsito para pedir información sobre el proceso de pago de una multa. El funcionario le dice que solo atienden solicitudes por escrito. ¿Según la Ley 1755 de 2015, qué error comete el funcionario?",
+  opciones: ["Ninguno, porque las entidades públicas pueden exigir que todo sea por escrito.", "Niega el derecho a recibir orientación jurídica gratuita.", "Desconoce que el derecho de petición también puede ejercerse de manera verbal.", "Impide que el ciudadano interponga una tutela de manera inmediata."],
+  respuestaCorrecta: "Desconoce que el derecho de petición también puede ejercerse de manera verbal."
+},
+{
+  pregunta: "Laura presenta una petición sobre licencias ambientales ante la alcaldía, pero esta no es la entidad competente para resolver el asunto. La alcaldía decide no responder y archiva la solicitud. De acuerdo con la Ley 1755 de 2015, ¿cuál habría sido la actuación correcta?",
+  opciones: ["Contestar explicando que no pueden ayudar y archivar el caso.", "Trasladar la petición a la autoridad competente e informar a la peticionaria.", "Devolver la petición a la ciudadana sin explicación alguna.", "Responder con un acto administrativo negando la licencia."],
+  respuestaCorrecta: "Trasladar la petición a la autoridad competente e informar a la peticionaria."
+}
+                    // Agrega más preguntas para el Nivel 2 aquí
+                ]
+            },
+            {
+                nivel: 3,
+                preguntas: [
+                {
+  pregunta: "Según el artículo 65 del reglamento del servicio de Policía, ¿cómo se denomina el conjunto de unidades policiales creadas por la ley, los reglamentos o el director general de la Policía Nacional, que se organiza para cumplir con la misión constitucional y garantizar la prestación del servicio de policía?",
+  opciones: ["Unidad policial", "Nivel estratégico", "Dependencia policial", "Estructura orgánica"],
+  respuestaCorrecta: "Estructura orgánica"
+},
+{
+  pregunta: "Un estudiante de la Escuela de Cadetes pregunta cómo se crean las unidades policiales dentro de la Policía Nacional. Su profesor le responde que hay tres fuentes de creación. Según el artículo 65 del reglamento del servicio de Policía, ¿cuáles son esas fuentes?",
+  opciones: ["El Ministerio de Defensa, el Congreso de la República y los Concejos Municipales.", "La ley, los reglamentos y el director general de la Policía Nacional.", "La Constitución, el Senado y las ordenanzas departamentales.", "La Dirección General, la Procuraduría y el Consejo Superior de la Judicatura."],
+  respuestaCorrecta: "La ley, los reglamentos y el director general de la Policía Nacional."
+},
+{
+  pregunta: "Con base en el artículo 70 del Direccionamiento del Servicio de Policía, se puede afirmar que la propuesta del comandante:",
+  opciones: ["Se aleja del direccionamiento estratégico, ya que prioriza la percepción ciudadana por encima de los resultados operativos.", "Es contraria a la doctrina policial, porque solo el nivel central puede definir procesos y objetivos marco.", "Es coherente con el direccionamiento del servicio de policía, al integrar procesos, capacidades y mejora continua.", "No es viable, ya que el valor público no es un eje del direccionamiento policial según la norma."],
+  respuestaCorrecta: "Es coherente con el direccionamiento del servicio de policía, al integrar procesos, capacidades y mejora continua."
+},
+{
+  pregunta: "¿Cuál de las siguientes unidades tiene la responsabilidad de dirigir y coordinar la ejecución de actividades operativas en los ámbitos urbano, rural, inteligencia e investigación criminal para la prevención, disuasión y control de delitos?",
+  opciones: ["Comando Operativo de Seguridad Ciudadana", "Región de Policía", "Comando de Atención Inmediata - CAI", "Oficina Asesora"],
+  respuestaCorrecta: "Comando Operativo de Seguridad Ciudadana"
+},
+{
+  pregunta: "¿Qué unidad de la Policía Nacional tiene la responsabilidad de articular y controlar la gestión del servicio de policía en las Policías Metropolitanas y Departamentos de Policía, asegurando el cumplimiento de los objetivos institucionales en toda su jurisdicción?",
+  opciones: ["Comando Operativo de Seguridad Ciudadana", "Región de Policía", "Comando de Atención Inmediata (CAI)", "Oficina Asesora"],
+  respuestaCorrecta: "Región de Policía"
+},
+{
+  pregunta: "De acuerdo con el artículo 11, ¿qué factores deben ser considerados para la creación de una Policía Metropolitana en un área específica?",
+  opciones: [
+    "Las características políticas, sociales, económicas y físicas de dos o más municipios con altos índices de criminalidad.",
+    "La integración de dos o más municipios con características políticas, económicas, sociales, culturales, físicas o criminológicas similares.",
+    "La existencia de un solo municipio con características criminológicas destacadas.",
+    "La necesidad de un control exclusivo de las autoridades nacionales."
+  ],
+  respuestaCorrecta: "La integración de dos o más municipios con características políticas, económicas, sociales, culturales, físicas o criminológicas similares."
+},
+{
+  pregunta: "Según el artículo 14, ¿quién es responsable del nombramiento del comandante operativo de cada unidad del Comando Operativo de Seguridad Ciudadana?",
+  opciones: [
+    "El comandante de la Policía Metropolitana o del Departamento de Policía.",
+    "El subcomandante de la Policía Nacional.",
+    "El Director General de la Policía Nacional.",
+    "El comandante de la unidad operativa en la que se desempeñará."
+  ],
+  respuestaCorrecta: "El Director General de la Policía Nacional."
+},
+{
+  pregunta: "¿Cuál es la principal diferencia entre los Puestos de Policía y las Subestaciones de Policía en cuanto a su ubicación y funciones?",
+  opciones: [
+    "Los Puestos de Policía se encargan exclusivamente del control de seguridad en las principales ciudades, mientras que las Subestaciones de Policía operan únicamente en zonas rurales y alejadas.",
+    "Los Puestos de Policía están destinados a ejercer control en sitios geográficos rurales, mientras que las Subestaciones de Policía se ubican en áreas urbanas, como centros poblados y barrios.",
+    "Los Puestos de Policía son unidades operativas en áreas rurales y en corregimientos, mientras que las Subestaciones de Policía están ubicadas en las principales ciudades y son encargadas del control de áreas metropolitanas.",
+    "Los Puestos de Policía y las Subestaciones de Policía tienen la misma función y ubicación, pero se diferencian en el tamaño del personal asignado."
+  ],
+  respuestaCorrecta: "Los Puestos de Policía están destinados a ejercer control en sitios geográficos rurales, mientras que las Subestaciones de Policía se ubican en áreas urbanas, como centros poblados y barrios."
+},
+{
+  pregunta: "Con base en el artículo 71 sobre gestión territorial para el servicio de policía, se puede afirmar que la actuación del teniente Forero:",
+  opciones: ["Es válida, ya que la Policía Nacional tiene autoridad para ordenar ajustes en la planeación territorial cuando esté en juego la seguridad ciudadana.", "Se encuentra dentro del marco del direccionamiento territorial, pues el fortalecimiento de capacidades institucionales incluye directivas obligatorias.", "Es una extralimitación de funciones, porque la gestión territorial implica acompañamiento y asesoría, no imposición ni órdenes a otras autoridades.", "Está permitida solo si el director general de la Policía Nacional lo respalda mediante documento doctrinal."],
+  respuestaCorrecta: "Es una extralimitación de funciones, porque la gestión territorial implica acompañamiento y asesoría, no imposición ni órdenes a otras autoridades."
+},
+{
+  pregunta: "¿Cuál es la interpretación correcta de las actuaciones del coronel Méndez según los artículos 70 y 71?",
+  opciones: ["Solo la acción a es correcta, porque el direccionamiento estratégico es una función exclusiva del nivel central.", "Solo la acción b es correcta, porque la gestión territorial implica asesoría a los alcaldes, no diseño de planes.", "Ambas acciones son correctas y complementarias para el cumplimiento de la misión policial.", "Ninguna de las acciones es correcta, porque el coronel está invadiendo funciones de otras autoridades."],
+  respuestaCorrecta: "Ambas acciones son correctas y complementarias para el cumplimiento de la misión policial."
+},
+{
+  pregunta: "¿Cuál es la interpretación correcta de las actuaciones del coronel según los artículos 70 y 71?",
+  opciones: ["Ambas actuaciones corresponden al direccionamiento del servicio de policía, ya que todo lo que haga un coronel es parte de la planeación institucional.", "La primera actuación se enmarca en el artículo 71, y la segunda en el artículo 70, pues una es interna y otra es externa.", "La primera actuación se refiere al artículo 70 (direccionamiento estratégico), y la segunda al artículo 71 (gestión territorial con autoridades locales).", "Ninguna actuación está contemplada en los artículos mencionados, pues no son competencia de oficiales regionales sino del nivel central."],
+  respuestaCorrecta: "La primera actuación se refiere al artículo 70 (direccionamiento estratégico), y la segunda al artículo 71 (gestión territorial con autoridades locales)."
+},
+{
+  pregunta: "Con base en el artículo 70 del Capítulo 11 sobre Direccionamiento y Gestión Territorial para el Servicio de Policía, se puede afirmar que la actuación del coronel Garzón:",
+  opciones: ["Se aleja del direccionamiento del servicio de policía, ya que busca modificar procesos sin autorización superior.", "Es coherente con el direccionamiento del servicio de policía, al integrar planificación estratégica, evaluación e impacto público.", "Es incompatible con la doctrina institucional, pues el direccionamiento se enfoca solo en objetivos a corto plazo.", "Está limitada, ya que los comandantes departamentales no pueden implementar modelos distintos a los nacionales."],
+  respuestaCorrecta: "Es coherente con el direccionamiento del servicio de policía, al integrar planificación estratégica, evaluación e impacto público."
+},
+{
+  pregunta: "Según el artículo 66 del reglamento del servicio de Policía, ¿cuál de los siguientes emparejamientos entre nivel de gerenciamiento y función es el más acertado?",
+  opciones: ["Nivel estratégico – Ejecuta operativos en campo y verifica el cumplimiento de protocolos en zonas de alta conflictividad.", "Nivel táctico – Formula la visión institucional de largo plazo y toma decisiones políticas para toda la Policía Nacional.", "Nivel operacional – Supervisa y ejecuta directamente las actividades planeadas conforme a lineamientos establecidos por los niveles superiores.", "Nivel superior – Se limita a tareas logísticas dentro de las unidades policiales sin participación en la toma de decisiones."],
+  respuestaCorrecta: "Nivel operacional – Supervisa y ejecuta directamente las actividades planeadas conforme a lineamientos establecidos por los niveles superiores."
+},
+{
+  pregunta: "Según el artículo 67 del reglamento del servicio de Policía, ¿cómo se define una dependencia policial?",
+  opciones: ["Es un grupo de trabajo encargado de realizar los operativos de campo directamente, sin supervisión de la alta dirección.", "Es un área funcional o grupo de trabajo dentro de la estructura orgánica de la unidad policial, cuyo propósito es cumplir con sus funciones a través de cargos específicos, siguiendo los criterios institucionales y necesidades del servicio.", "Es una unidad policial creada para gestionar recursos, pero sin necesidad de coordinar con otras dependencias.", "Es un grupo de supervisores encargados de controlar exclusivamente los recursos financieros dentro de la estructura policial."],
+  respuestaCorrecta: "Es un área funcional o grupo de trabajo dentro de la estructura orgánica de la unidad policial, cuyo propósito es cumplir con sus funciones a través de cargos específicos, siguiendo los criterios institucionales y necesidades del servicio."
+},
+{
+  pregunta: "Según el artículo 67 del reglamento del servicio de Policía, ¿cómo se denomina el grupo de trabajo o área funcional incorporada en la estructura orgánica interna de la unidad policial, cuyo propósito es cumplir con las funciones asignadas observando los criterios institucionales y de acuerdo con las necesidades del servicio?",
+  opciones: ["Unidad policial", "Dependencia policial", "Estructura orgánica", "Nivel estratégico"],
+  respuestaCorrecta: "Dependencia policial"
+},
+{
+  pregunta: "Según el artículo 66 del reglamento del servicio de Policía, ¿cómo se denomina la agrupación o delimitación funcional de dependencias dentro de la Policía Nacional, diseñada para cumplir con la misión constitucional y asegurar la prestación del servicio de policía?",
+  opciones: ["Dirección General", "Unidad policial", "Nivel estratégico", "Dependencia policial"],
+  respuestaCorrecta: "Unidad policial"
+},
+                {
+  pregunta: "Pasado cuanto tiempo, desde la imposición de la multa sin que esta hubiera sido pagada se procederá al cobro coactivo, incluyendo sus intereses por mora y costos del cobro coactivo:",
+  opciones: [
+    "Transcurridos (90) días",
+    "Transcurridos (60) días",
+    "Transcurrido (1) mes",
+    "Transcurridos (6) meses"
+  ],
+  respuestaCorrecta: "Transcurridos (90) días"
+},
+{
+  pregunta: "En la audiencia realizada de acuerdo al artículo 223 de la ley 1801 frente al proceso verbal abreviado de competencia del alcalde, inspector y corregidor y autoridades especiales, en una etapa procesal de la audiencia se pueden decretar pruebas, si el presunto infractor o el quejoso solicitan la práctica de pruebas adicionales, pertinentes y conducentes, y si la autoridad las considera viables o las requiere, las decretará y se practicarán en un término de:",
+  opciones: [
+    "máximo de cinco (10) días",
+    "máximo de cinco (6) días",
+    "máximo de cinco (5) días",
+    "máximo de cinco (5) horas"
+  ],
+  respuestaCorrecta: "máximo de cinco (5) días"
+},
+{
+  pregunta: "Cumplimiento o ejecución de la orden de Policía o la medida correctiva. Una vez ejecutoriada la decisión que contenga una orden de Policía o una medida correctiva, esta se cumplirá en un término de:",
+  opciones: [
+    "máximo de cinco (5) días hábiles",
+    "máximo de cinco (6) días hábiles",
+    "máximo de cinco (5) semanas",
+    "máximo de cinco (6) semanas"
+  ],
+  respuestaCorrecta: "máximo de cinco (5) días hábiles"
+},
+{
+  pregunta: "Las Comisiones de Verificación de la sociedad civil podrán realizar la revista y verificar los elementos de dotación con los que cuentan los policiales asignados para el acompañamiento e intervención de las movilizaciones, en aras de evitar el porte de armas letales que pongan en riesgo la vida y la integridad de los manifestantes. El anterior texto es",
+  opciones: ["Verdadero", "Falso"],
+  respuestaCorrecta: "Falso"
+},
+{
+  pregunta: "La mesa nacional de evaluación sesionará ordinariamente...",
+  opciones: [
+    "Al menos una vez al año y de manera extraordinaria cuando se considere necesaria",
+    "Al menos dos veces al año y de manera extraordinaria cuando se considere necesaria",
+    "Al menos tres veces al año y de manera extraordinaria cuando se considere necesaria",
+    "Al menos cuatro veces al año y de manera extraordinaria cuando se considere necesaria, el primer trimestre de cada año"
+  ],
+  respuestaCorrecta: "Al menos una vez al año y de manera extraordinaria cuando se considere necesaria"
+},
+{
+  pregunta: "¿Cuál es la relación entre lo que está haciendo el niño en toda la tira cómica y lo que hace en el recuadro 2?",
+  opciones: [
+    "En el recuadro 2 el niño continúa haciendo lo que hace en el recuadro 1.",
+    "En el recuadro 2 el niño interrumpe lo que está haciendo en el recuadro 1.",
+    "En el recuadro 2 el niño completa lo que está haciendo en lo recuadros 1 y 3.",
+    "En el recuadro 2 el niño reanuda lo que dejó de hacer en lo recuadros 1 y 3."
+  ],
+  respuestaCorrecta: "En el recuadro 2 el niño interrumpe lo que está haciendo en el recuadro 1."
+},
+{
+  pregunta: "Es la calificación bajo la cual se presume la naturaleza de toda manifestación pública...",
+  opciones: ["Temeraria", "Pacífica", "Constitucional", "Organizada"],
+  respuestaCorrecta: "Pacífica"
+},
+{
+  pregunta: "¿Qué expresan los gestos y las palabras del niño a lo largo del cómic?",
+  opciones: [
+    "Que está preocupado por terminar su escrito lo más pronto posible.",
+    "Que no está preocupado por empezar pronto su escrito.",
+    "Que no está tranquilo porque debe hacer su escrito.",
+    "Que está tranquilo porque ya terminó su escrito."
+  ],
+  respuestaCorrecta: "Que no está tranquilo porque debe hacer su escrito."
+},
+{
+  pregunta: "Según el diagrama, la Corte entra en el proceso de tutela",
+  opciones: [
+    "solo si el fallo se impugna.",
+    "siempre que se interponga una tutela.",
+    "solo si el juez revisa el expediente.",
+    "siempre que el fallo tenga fundamento."
+  ],
+  respuestaCorrecta: "siempre que se interponga una tutela."
+},
+{
+  pregunta: "¿Cuál es el propósito principal de esta infografía?",
+  opciones: [
+    "Exponer a los académicos el fenómeno del secuestro en Colombia.",
+    "Explicar las causas del secuestro en Colombia.",
+    "Presentar los indicadores del secuestro en Colombia.",
+    "Exhibir un punto de vista sobre el secuestro en Colombia."
+  ],
+  respuestaCorrecta: "Presentar los indicadores del secuestro en Colombia."
+},
+{
+  pregunta: "El juez dicta el *",
+  opciones: [
+    "antes de conocer los documentos del órgano implicado.",
+    "después de valorar las pruebas requeridas o disponibles.",
+    "en el momento de notificar a las partes.",
+    "luego de que la corte ha revisado la tutela."
+  ],
+  respuestaCorrecta: "después de valorar las pruebas requeridas o disponibles."
+},
+{
+  pregunta: "Según la infografía, el bajo número de condenas en relación con el número total de secuestros puede deberse en parte a",
+  opciones: [
+    "el alto número de capturados.",
+    "la demora de los procesos.",
+    "la variedad de autores de secuestros.",
+    "el alto porcentaje de autores presuntos."
+  ],
+  respuestaCorrecta: "la demora de los procesos."
+},
+{
+  pregunta: "Tomás, de 17 años, con diagnóstico clínico de esquizofrenia paranoide, escucha voces que le ordenan atacar a su vecino porque supuestamente lo espía. En un brote psicótico, lo golpea con un objeto contundente, causándole lesiones graves. Al momento de los hechos, estaba sin medicación y no comprendía la ilicitud de su conducta ni podía controlarla. De acuerdo con el Código Penal colombiano, ¿Tomás puede ser penalmente responsable?",
+  opciones: [
+    "No, porque al ser menor de edad, automáticamente es inimputable.",
+    "Sí, porque la enfermedad mental no justifica el daño causado.",
+    "No, porque actuó en un estado de inimputabilidad por trastorno mental.",
+    "Sí, pero su pena se sustituirá por tratamiento médico obligatorio."
+  ],
+  respuestaCorrecta: "No, porque actuó en un estado de inimputabilidad por trastorno mental."
+},
+{
+  pregunta: "Ana, molesta por una discusión con su pareja, lanza con fuerza una taza contra la pared. Sin embargo, esta rebota y golpea accidentalmente a su hijo, causándole una herida en la cabeza. En otro caso, Marco golpea a alguien con intención de herirlo levemente, pero termina causándole la muerte. Finalmente, Laura envenena intencionalmente la comida de su suegra con el propósito de matarla. Según el Código Penal colombiano, ¿cuál es la clasificación correcta de las conductas descritas?",
+  opciones: [
+    "Ana actuó con dolo; Marco con culpa; Laura conpreterintención.",
+    "Ana actuó con culpa; Marco conpreterintención; Laura con dolo.",
+    "Ana actuó conpreterintención; Marco con dolo; Laura con culpa.",
+    "Ana actuó con dolo; Marco con culpa; Laura con culpa."
+  ],
+  respuestaCorrecta: "Ana actuó conpreterintención; Marco con dolo; Laura con culpa."
+},
+{
+  pregunta: "Ana, molesta por una discusión con su pareja, lanza con fuerza una taza contra la pared. Sin embargo, esta rebota y golpea accidentalmente a su hijo, causándole una herida en la cabeza. En otro caso, Marco golpea a alguien con intención de herirlo levemente, pero termina causándole la muerte. Finalmente, Laura envenena intencionalmente la comida de su suegra con el propósito de matarla. Según el Código Penal colombiano, ¿cuál es la clasificación correcta de las conductas descritas?",
+  opciones: [
+    "Ana actuó con dolo; Marco con culpa; Laura conpreterintención.",
+    "Ana actuó con culpa; Marco conpreterintención; Laura con dolo.",
+    "Ana actuó conpreterintención; Marco con dolo; Laura con culpa.",
+    "Ana actuó con dolo; Marco con culpa; Laura con culpa."
+  ],
+  respuestaCorrecta: "Ana actuó con culpa; Marco conpreterintención; Laura con dolo."
+},
+{
+  pregunta: "Durante una investigación por homicidio, la policía encuentra un cuchillo con manchas de sangre en la escena del crimen. El patrullero que lo recoge lo guarda en una bolsa sin rotular, lo lleva a la estación, y lo deja en un escritorio sin reportar el hallazgo en el formato oficial de cadena de custodia. Al día siguiente, otro uniformado lo lleva al laboratorio forense para análisis de ADN. Según la Ley 906 de 2004, ¿qué implicación procesal puede tener esta falla en la cadena de custodia?",
+  opciones: [
+    "El cuchillo será igualmente válido como prueba porque fue hallado en la escena del crimen.",
+    "El cuchillo podrá ser excluido como prueba, porque no se garantiza su autenticidad ni integridad.",
+    "El cuchillo solo podrá ser usado si se encuentra al culpable por otros medios.",
+    "La cadena de custodia solo es exigible en delitos sexuales o contra la."
+  ],
+  respuestaCorrecta: "El cuchillo podrá ser excluido como prueba, porque no se garantiza su autenticidad ni integridad."
+},
+{
+  pregunta: "Durante un allanamiento, un investigador judicial encuentra un paquete con sustancias que aparentan ser alucinógenos. El funcionario lo observa, lo fotografía, y se lo entrega al fiscal sin hacer ningún registro escrito ni embalarlo en el lugar de los hechos. El fiscal lo lleva directamente al laboratorio para el análisis químico. Según la Ley 906 de 2004, ¿en qué momento debió iniciarse la cadena de custodia?",
+  opciones: [
+    "Cuando el fiscal lo entrega al laboratorio para su análisis.",
+    "Cuando el paquete fue fotografiado por el investigador.",
+    "Cuando el funcionario judicial tuvo el primer contacto con el elemento material probatorio.",
+    "Al momento de que el laboratorio lo registra en su base de datos."
+  ],
+  respuestaCorrecta: "Cuando el funcionario judicial tuvo el primer contacto con el elemento material probatorio."
+},
+{
+  pregunta: "Durante una operación contra el contrabando, la DIAN realiza inspecciones en bodegas y encuentra elementos que podrían constituir evidencia de un delito. El director de la operación ordena la recolección, embalaje y rotulación de los elementos hallados, y los entrega posteriormente al fiscal del caso, junto con un informe técnico detallado. Según la Ley 906 de 2004, ¿qué tipo de policía judicial ejerce la DIAN en este caso?",
+  opciones: [
+    "Policía judicial permanente, por ser una entidad del Estado.",
+    "Policía judicial permanente especial, porque tiene funciones limitadas a ciertos delitos.",
+    "Policía judicial transitoria, porque actúa solo si hay emergencia nacional.",
+    "Policía judicial plena, porque actúa con total autonomía investigativa."
+  ],
+  respuestaCorrecta: "Policía judicial permanente especial, porque tiene funciones limitadas a ciertos delitos."
+},
+{
+  pregunta: "El código penal colombiano establece las modalidades de la conducta punible encontrado como una de ellas la culpa, la cual debe estar establecida en el tipo penal; para identificar que una conducta es culposa basta con establecer que cuando su resultado, siendo previsible, excede la intención del agente.",
+  opciones: [
+    "cuando el agente conoce los hechos constitutivos de la infracción penal y quiere su realización",
+    "cuando la realización de la infracción penal ha sido prevista como probable y su no producción se deja librada al azar.",
+    "cuando el resultado típico es producto de la infracción al deber objetivo de cuidado y el agente debió haberlo previsto por ser previsible, o habiéndolo previsto, confió en poder evitarlo.",
+    "cuando el agente realiza la conducta con conciencia y voluntad de producir un resultado concreto."
+  ],
+  respuestaCorrecta: "cuando el resultado típico es producto de la infracción al deber objetivo de cuidado y el agente debió haberlo previsto por ser previsible, o habiéndolo previsto, confió en poder evitarlo."
+},
+{
+  pregunta: "Sandra quien es esposa de Juan, tiene la intención de lesionar levemente en el rostro a su esposo, por lo que le tira encima un manojo de llaves, pero no toma en cuenta que él está recostado en el barandal del balcón de su apartamento y, al percatarse que el objeto se dirige hacia él y tratar de esquivarlo, pierde el equilibrio y se va de balcón a bajo, muriendo instantáneamente. Teniendo en cuenta las modalidades de la conducta punible podemos que Sandra cometió un delito en la modalidad de:",
+  opciones: [
+    "Dolo",
+    "Culpa",
+    "Preterintencional",
+    "Tentativa"
+  ],
+  respuestaCorrecta: "Preterintencional"
+},
+{
+  pregunta: "De acuerdo al código penal podemos decir que existe tentativa cuando.",
+  opciones: [
+    "El que iniciare la ejecución de una conducta punible mediante actos idóneos e inequívocamente dirigidos a su consumación, y ésta no se produjere por circunstancias ajenas a su voluntad",
+    "El que iniciare la ejecución de una conducta punible mediante actos idóneos e inequívocamente dirigidos a su consumación, y ésta no se produjere por su propia voluntad",
+    "El que planeare la ejecución de una conducta punible pero no realizare los actos idóneos para lograr su consumación",
+    "El que ejecutare la conducta punible mediante actos idóneos e inequívocamente dirigidos a su real consumación"
+  ],
+  respuestaCorrecta: "El que iniciare la ejecución de una conducta punible mediante actos idóneos e inequívocamente dirigidos a su consumación, y ésta no se produjere por circunstancias ajenas a su voluntad"
+},
+{
+  pregunta: "De acuerdo al código penal quien realice la conducta punible por sí mismo o utilizando a otro como instrumento es:",
+  opciones: [
+    "Coautor",
+    "determinador",
+    "cómplice",
+    "autor"
+  ],
+  respuestaCorrecta: "autor"
+},
+{
+  pregunta: "La ley 599 de 2000 establece que concurren en la realización de la conducta punible los:",
+  opciones: [
+    "Autor mediato e inmediato",
+    "Autor y coautor",
+    "Interviniente y determinador",
+    "Autores y partícipes"
+  ],
+  respuestaCorrecta: "Autores y partícipes"
+},
+{
+  pregunta: "María quien trabaja en una joyería es contactada por AYMER quien le cuenta su deseo de ingresar a hurtar dicha joyería, pero requiere que esta le ayude con apagar el sistema de alarma, y así le quedara mucho más fácil efectuar su cometido a lo que maría accede y apaga la alarma sabiendo que AYMER ingresara a robar esa noche. Teniendo en cuenta el concurso de personas en la conducta punible MARÍA Y AYMER son.",
+  opciones: [
+    "A, autor mediato y autor inmediato",
+    "coautores ya que hubo acuerdo común y división del trabajo criminal",
+    "cómplice y autor",
+    "interviniente y determinador"
+  ],
+  respuestaCorrecta: "cómplice y autor"
+},
+{
+  pregunta: "Quien contribuya a la realización de la conducta antijurídica o preste una ayuda posterior, por concierto previo o concomitante a la misma, incurrirá en la pena prevista para la correspondiente infracción disminuida de una sexta parte a la mitad. Se refiere a:",
+  opciones: [
+    "Interviniente",
+    "Cómplice",
+    "Determinador",
+    "Instrumento"
+  ],
+  respuestaCorrecta: "Cómplice"
+},
+{
+  pregunta: "El que no tenga las calidades especiales exigidas en el tipo penal concurra en su realización, se le rebajará la pena en una cuarta parte. Se refiere a:",
+  opciones: [
+    "Cómplice",
+    "Interviniente",
+    "Determinador",
+    "Conspirador"
+  ],
+  respuestaCorrecta: "Interviniente"
+},
+{
+  pregunta: "Daniel se encuentra en una situación en la que es testigo de un intento de secuestro de una menor de edad, sin embargo, él decide tomar un vehículo sin permiso y perseguir al secuestrador para rescatar a la víctima. Al llegar los agentes de Policía lo capturan por el delito de hurto. Teniendo en cuenta las causales de ausencia e irresponsabilidad Daniel no es responsable porque",
+  opciones: [
+    "Actuó en legítima defensa",
+    "Actuó por error invencible de que la conducta constituía un delito",
+    "Actuó por miedo insuperable",
+    "Actuó por la necesidad de proteger un derecho propio o ajeno de un peligro actual o inminente"
+  ],
+  respuestaCorrecta: "Actuó por la necesidad de proteger un derecho propio o ajeno de un peligro actual o inminente"
+},
+{
+  pregunta: "Es inimputable quien en el momento de ejecutar la conducta típica y antijurídica no tuviera la capacidad de comprender su ilicitud o de determinarse de acuerdo con esa comprensión, de acuerdo a la ley penal colombiana cuál de los siguientes NO son inimputables",
+  opciones: [
+    "Inmadurez psicológica",
+    "Adultos mayores",
+    "Trastorno mental",
+    "Diversidad sociocultural"
+  ],
+  respuestaCorrecta: "Adultos mayores"
+},
+{
+  pregunta: "María ha sido abusada y amenazada física y sexualmente por su pareja sentimental, con quien vive actualmente, por lo que ella decide interponer una denuncia en su contra. Se inicia un porco penal y antes del juicio ella recibe una amenaza por parte de su pareja en la que advierte que será dañada físicamente si presenta su testimonio. Ella reporta dicha situación a la Policía Nacional en donde le indican que debe solicitar la protección a:",
+  opciones: [
+    "Juez de control de garantías",
+    "Juez de conocimiento",
+    "Fiscalía",
+    "Defensoría del pueblo"
+  ],
+  respuestaCorrecta: "Fiscalía"
+},
+{
+  pregunta: "la defensa que se ejerza para rechazar al extraño que usando maniobras o mediante violencia penetre o permanezca arbitrariamente en habitación o dependencias inmediatas, o vehículo ocupado. Se refiere a.",
+  opciones: [
+    "legítima defensa",
+    "estado de necesidad",
+    "legítima defensa privilegiada",
+    "error de tipo"
+  ],
+  respuestaCorrecta: "legítima defensa privilegiada"
+},
+{
+  pregunta: "El principio de oportunidad es la facultad que se otorga para interrumpir, suspender o renunciar a la persecución penal, su aplicabilidad es una atribución de:",
+  opciones: [
+    "Juez de control de garantías",
+    "Corte suprema de justicia",
+    "Fiscalía",
+    "Juez de conocimiento"
+  ],
+  respuestaCorrecta: "Fiscalía"
+},
+{
+  pregunta: "El fiscal encargado de una investigación ordena el allanamiento y registro de una vivienda, al culminar la actuación los funcionarios de Policía judicial recolectan unos elementos materiales probatorios los Cuales deben ser llevados por parte del fiscal a.",
+  opciones: [
+    "juez de conocimiento para su control de legalidad dentro de las treinta y seis (36) horas siguientes.",
+    "juez de control de garantías, para su control de legalidad en el término de la distancia",
+    "fiscal general de la nación para su correspondiente control de legalidad dentro de las 24 horas siguientes.",
+    "juez de control de garantías los elementos, para su control de legalidad dentro de las treinta y seis (36) horas siguientes."
+  ],
+  respuestaCorrecta: "juez de control de garantías los elementos, para su control de legalidad dentro de las treinta y seis (36) horas siguientes."
+},
+{
+  pregunta: "Juan quien es acusado injustamente por la comisión de un delito de homicidio, cuenta con un testigo clave para demostrar su inocencia, este es citado por la defensa a rendir testimonio en el juicio, pero informa que ha recibido amenazas y teme por su vida, cual es la entidad encargada de brindarle protección.",
+  opciones: [
+    "La fiscalía",
+    "El consejo superior de la judicatura ya que es abogado de profesión",
+    "La defensoría del pueblo",
+    "El juez de control de garantías"
+  ],
+  respuestaCorrecta: "La defensoría del pueblo"
+},
+{
+  pregunta: "Cuál de los siguientes tiene la atribución de Ordenar capturas, de manera excepcional y en los casos previstos en este código.",
+  opciones: [
+    "La Policía judicial",
+    "La fiscalía",
+    "El juez penal",
+    "Los jueces administrativos"
+  ],
+  respuestaCorrecta: "La fiscalía"
+},
+{
+  pregunta: "En un municipio intermedio se ha reportado un aumento significativo en el hurto a residencias. Ante la presión de la comunidad y las autoridades locales, se solicita la implementación inmediata de una estrategia de prevención y disuasión, así como la articulación con la administración municipal para fortalecer la convivencia ciudadana. Se requiere, además, que se haga presencia institucional y se mantenga contacto directo con la ciudadanía.\n\nSegún el Reglamento de Guarnición y Control de Servicios, ¿quién debe liderar esta respuesta institucional?",
+  opciones: [
+    "El Comandante de Región, porque dirige los planes operativos de prevención en toda la región.",
+    "El Comandante de Policía Metropolitana o Departamento, porque articula acciones con las autoridades locales y lidera la ejecución de estrategias en su jurisdicción.",
+    "El Director General de la Policía Nacional, porque está a cargo de toda la institución.",
+    "El Jefe de Inteligencia, porque diseña las estrategias de prevención del delito en todo el país."
+  ],
+  respuestaCorrecta: "El Comandante de Policía Metropolitana o Departamento, porque articula acciones con las autoridades locales y lidera la ejecución de estrategias en su jurisdicción."
+},
+{
+  pregunta: "De acuerdo con el artículo 11, ¿qué factores deben ser considerados para la creación de una Policía Metropolitana en un área específica?",
+  opciones: [
+    "Las características políticas, sociales, económicas y físicas de dos o más municipios con altos índices de criminalidad.",
+    "La integración de dos o más municipios con características políticas, económicas, sociales, culturales, físicas o criminológicas similares.",
+    "La existencia de un solo municipio con características criminológicas destacadas.",
+    "La necesidad de un control exclusivo en áreas rurales."
+  ],
+  respuestaCorrecta: "La integración de dos o más municipios con características políticas, económicas, sociales, culturales, físicas o criminológicas similares."
+},
+{
+  
+  pregunta: "De acuerdo con el artículo 10, ¿qué cualificación y experiencia debe tener el comandante de la región de policía?",
+  opciones: [
+    "Ser un oficial con experiencia únicamente en el área administrativa de la policía.",
+    "Ser un oficial diplomado en la Academia Superior de Policía, con especialidad y experiencia en las diferentes áreas operativas del servicio de policía.",
+    "Ser un oficial con experiencia en la gestión de los servicios de inteligencia.",
+    "Ser un comandante de un puesto de policía con amplia experiencia en el control de áreas rurales."
+  ],
+  respuestaCorrecta: "Ser un oficial diplomado en la Academia Superior de Policía, con especialidad y experiencia en las diferentes áreas operativas del servicio de policía."
+},
+{
+  pregunta: "¿Cuál de las siguientes unidades de la Policía Nacional está destinada a coordinar la atención inmediata y la respuesta oportuna a los requerimientos ciudadanos dentro de los perímetros urbanos, como municipios, localidades, comunas o barrios de las principales ciudades?",
+  opciones: [
+    "Comando Operativo de Seguridad Ciudadana",
+    "Comando de Atención Inmediata - CAI",
+    "Puesto de Policía",
+    "Estación de Policía"
+  ],
+  respuestaCorrecta: "Comando de Atención Inmediata - CAI"
+},
+{
+  pregunta: "¿Cuál de las siguientes funciones le corresponde al Oficial de Guarnición según el reglamento?\nA. Dictar sanciones disciplinarias a patrulleros en servicio.\nB. Llevar personalmente los casos judiciales a la Fiscalía.\nC. Supervisar el servicio de vigilancia y registrar actividades en el libro correspondiente.\nD. Reemplazar al comandante de distrito en caso de ausencia.",
+  opciones: [
+    "Dictar sanciones disciplinarias a patrulleros en servicio.",
+    "Llevar personalmente los casos judiciales a la Fiscalía.",
+    "Supervisar el servicio de vigilancia y registrar actividades en el libro correspondiente.",
+    "Reemplazar al comandante de distrito en caso de ausencia."
+  ],
+  respuestaCorrecta: "Supervisar el servicio de vigilancia y registrar actividades en el libro correspondiente."
+},
+{
+  pregunta: "Durante su turno, el oficial efectúa revista a las unidades dentro de su jurisdicción, verifica el funcionamiento del servicio de vigilancia de las patrullas, supervisando la correcta disposición del personal y del equipo, y deja constancia de todo en el libro correspondiente. Además, asesora personalmente casos policiales sensibles que requieren precaución.\n\n¿A qué servicio corresponde esta función?\nA. Oficial de Guarnición\nB. Oficial de Inspección\nC. Oficial de semana\nD. Oficial general de semana",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial de Inspección",
+    "Oficial de semana",
+    "Oficial general de semana"
+  ],
+  respuestaCorrecta: "Oficial de Inspección"
+},
+{
+  pregunta: "¿Cuál de las siguientes unidades tiene la responsabilidad de dirigir y coordinar la ejecución de actividades operativas en los ámbitos urbano, rural, inteligencia e investigación criminal para la prevención, disuasión y control de delitos?",
+  opciones: [
+    "Comando Operativo de Seguridad Ciudadana",
+    "Región de Policía",
+    "Comando de Atención Inmediata - CAI",
+    "Oficina Asesora"
+  ],
+  respuestaCorrecta: "Comando Operativo de Seguridad Ciudadana"
+},
+{
+  pregunta: "La fiscalía tiene la atribución de Presentar la acusación para dar inicio al juicio oral. Ante qué juez la presenta",
+  opciones: [
+    "ante el juez de conocimiento",
+    "ante el juez de control de garantías",
+    "ante el juez de ejecución de penas y medidas de seguridad",
+    "ante un juez penal"
+  ],
+  respuestaCorrecta: "ante el juez de conocimiento"
+},
+{
+  pregunta: "la fiscalía general de la nación tiene unas ATRIBUCIONES ESPECIALES en relación con el ejercicio de la acción penal, cual de las siguientes NO es una de ellas",
+  opciones: [
+    "Investigar y acusar, si hubiere lugar, a los servidores públicos que gocen de fuero constitucional, con las excepciones previstas en la",
+    "Dirigir y coordinar las funciones de policía judicial que en ejercicio de sus atribuciones cumplan otros entes.",
+    "Adelantar directamente o mediante delegados las investigaciones y acusaciones ante la Corte Suprema de Justicia.",
+    "Nombrar y remover libremente a sus empleados."
+  ],
+  respuestaCorrecta: "Nombrar y remover libremente a sus empleados."
+},
+{
+  pregunta: "la fiscalía general de la nación tiene unas ATRIBUCIONES ESPECIALES en relación con el ejercicio de la acción penal, cual de las siguientes NO es una de ellas",
+  opciones: [
+    "Investigar y acusar, si hubiere lugar, a los servidores públicos que gocen de fuero constitucional, con las excepciones previstas en la Constitución",
+    "Asumir directamente las investigaciones y procesos, cualquiera sea el estado en que se encuentren, lo mismo que asignar y desplazar libremente a sus servidores en las investigaciones y procesos, mediante orden motivada.",
+    "Interponer y sustentar los recursos ordinarios y extraordinarios y la acción de revisión en los eventos establecidos por este código",
+    "Determinar el criterio y la posición que la fiscalía deba asumir en virtud de los principios de unidad de gestión y jerarquía, sin perjuicio de la autonomía de los fiscales delegados en los términos y condiciones fijados por la ley."
+  ],
+  respuestaCorrecta: "Interponer y sustentar los recursos ordinarios y extraordinarios y la acción de revisión en los eventos establecidos por este código"
+},
+                    // Agrega más preguntas para el Nivel 3 aquí
+                ]
+            },
+            {
+                nivel: 4,
+                preguntas: [
+                {
+  pregunta: "Un patrullero llega a un lugar donde reportan un accidente de transito en donde una persona en aparente estado de embriaguez choca contra un motociclista ocasionándole la muerte. Para adelantar la investigación se deben realizar actuaciones como inspección de cadáver, inspección al lugar de los hechos. En este caso se requiere del desarrollo de funciones propias de policía judicial las cuales son realizadas de manera permanente especial dentro de su competencia por parte de.",
+  opciones: [
+    "Cuerpo técnico de investigación de la fiscalía",
+    "Policía judicial de la policía nacional",
+    "Autoridades de transito",
+    "Inspector de policía"
+  ],
+  respuestaCorrecta: "Autoridades de transito"
+},
+{
+  pregunta: "De acuerdo con el artículo 10, ¿qué cualificación y experiencia debe tener el comandante de la región de policía?",
+  opciones: [
+    "Ser un oficial con experiencia únicamente en el área administrativa de la policía.",
+    "Ser un oficial diplomado en la Academia Superior de Policía, con especialidad y experiencia en las diferentes áreas operativas del servicio de policía.",
+    "Ser un oficial con experiencia en la gestión de los servicios de inteligencia.",
+    "Ser un comandante de un puesto de policía con amplia experiencia en el control de áreas rurales."
+  ],
+  respuestaCorrecta: "Ser un oficial diplomado en la Academia Superior de Policía, con especialidad y experiencia en las diferentes áreas operativas del servicio de policía."
+},
+{
+  pregunta: "Según el artículo 9, ¿cuál es la principal función de las oficinas asesoras dentro de la Policía Nacional?",
+  opciones: [
+    "Supervisar exclusivamente el desempeño de los oficiales de policía en las unidades operativas.",
+    "Agrupar las dependencias encargadas de la asesoría para la determinación de políticas institucionales y asistir en la gestión de las dependencias directivas.",
+    "Gestionar la administración de recursos financieros para la Policía Nacional.",
+    "Controlar las funciones operativas en las zonas rurales y urbanas."
+  ],
+  respuestaCorrecta: "Agrupar las dependencias encargadas de la asesoría para la determinación de políticas institucionales y asistir en la gestión de las dependencias directivas."
+},
+{
+  pregunta: "¿Cuál de las siguientes unidades de la Policía Nacional está encargada de ejercer control policial en sitios geográficos rurales, tales como corregimientos, inspecciones de policía, caseríos o veredas?",
+  opciones: [
+    "Comando Operativo de Seguridad Ciudadana",
+    "Subestación de Policía",
+    "Puesto de Policía",
+    "Policía Metropolitana"
+  ],
+  respuestaCorrecta: "Puesto de Policía"
+},
+{
+  pregunta: "El reglamento de guarnición y control de servicios en la Policía Nacional establece que la orden debe ser:\nA. Imprecisa\nB. Injusta\nC. Ilógica\nD. De fácil cumplimiento",
+  opciones: ["Imprecisa", "Injusta", "Ilógica", "De fácil cumplimiento"],
+  respuestaCorrecta: "De fácil cumplimiento"
+},
+{
+  pregunta: "LA METROPOLITANA DE BOGOTÁ es una unidad policial en la que se ejercen funciones de policía en un área metropolitana específica. ¿Cuál de las siguientes NO comprende una jurisdicción específica para el cumplimiento de la misión policial?\na. La responsabilidad de las unidades en los diferentes servicios asignados al personal uniformado.\nb. A la guarnición la cual está integrada por el conjunto de funcionarios asignados a ella.\nc. La división de la ciudad bajo el aspecto geográfico y de talento humano que integra la metropolitana de Bogotá.\nd. El régimen de aplicación de las normas en materia de servicios en la metropolitana de Bogotá.",
+  opciones: [
+    "La responsabilidad de las unidades en los diferentes servicios asignados al personal uniformado.",
+    "A la guarnición la cual está integrada por el conjunto de funcionarios asignados a ella.",
+    "La división de la ciudad bajo el aspecto geográfico y de talento humano que integra la metropolitana de Bogotá.",
+    "El régimen de aplicación de las normas en materia de servicios en la metropolitana de Bogotá."
+  ],
+  respuestaCorrecta: "La división de la ciudad bajo el aspecto geográfico y de talento humano que integra la metropolitana de Bogotá."
+},
+{
+  pregunta: "De acuerdo con el Reglamento de Guarnición y Control de Servicios, la siguiente definición: “Es el área geográfica asignada a una unidad de policía para todos los fines del servicio, dentro de la cual desarrolla su propósito de lograr una mayor efectividad de servicio” corresponde al concepto de:\nA. JURISDICCIÓN\nB. TERRITORIO GEOGRÁFICO\nC. UNIDAD POLICIAL\nD. SECTOR GEOGRÁFICO",
+  opciones: ["JURISDICCIÓN", "TERRITORIO GEOGRÁFICO", "UNIDAD POLICIAL", "SECTOR GEOGRÁFICO"],
+  respuestaCorrecta: "JURISDICCIÓN"
+},
+{
+  pregunta: "Según la Resolución 0242 de 2023, ¿qué características debe tener un comandante de región para ejercer su cargo?",
+  opciones: [
+    "Ser abogado penalista, con posgrado en derechos humanos",
+    "Haber sido intendente general o inspector policial",
+    "Ser diplomado de la Academia Superior de Policía con experiencia en áreas operativas",
+    "Ser elegido por mayoría de votos de los comandantes de departamento"
+  ],
+  respuestaCorrecta: "Ser diplomado de la Academia Superior de Policía con experiencia en áreas operativas"
+},
+{
+  pregunta: "cuál de los siguientes son órganos que ejercen transitoriamente funciones de policía judicial:",
+  opciones: [
+    "procuraduría",
+    "los entes públicos por resolución del fiscal general de la Nación",
+    "contraloría",
+    "entidades de vigilancia y control"
+  ],
+  respuestaCorrecta: "los entes públicos por resolución del fiscal general de la Nación"
+},
+{
+  pregunta: "juan quien es perito en documentología debe realizar un dictamen pericial en donde establecerá un resultado que debe ser presentado en juicio, para acompañar su dictamen debe realizar un informe que posea alguna de las siguientes características.",
+  opciones: [
+    "Relación clara y precisa de los elementos materiales probatorios y evidencia física descubiertos, así como de su recolección, embalaje y sometimiento a cadena de custodia;",
+    "El informe con el registro de las entrevistas e interrogatorios que hubiese realizado.",
+    "La descripción clara y precisa de los procedimientos técnicos empleados en la realización del examen y, además, informe sobre el grado de aceptación de dichos procedimientos por la comunidad técnico-científica",
+    "Relación clara y precisa de los elementos materiales probatorios y evidencia física descubiertos, así como de su recolección, embalaje y sometimiento a cadena de custodia"
+  ],
+  respuestaCorrecta: "La descripción clara y precisa de los procedimientos técnicos empleados en la realización del examen y, además, informe sobre el grado de aceptación de dichos procedimientos por la comunidad técnico-científica"
+},
+{
+  pregunta: "La entrevista forense de niños, niñas o adolescentes víctimas de violencia sexual será realizada por personal del",
+  opciones: [
+    "El instituto colombiano de bienestar familiar previa revisión del cuestionario por parte del juez de control de garantías",
+    "El defensor de familia",
+    "Psicólogos expertos en entrevista forense previa revisión del cuestionario por parte del fiscal delegado",
+    "personal del Cuerpo Técnico de Investigación de la fiscalía general de la Nación, entrenado en entrevista forense previa revisión del cuestionario por parte del defensor de familia"
+  ],
+  respuestaCorrecta: "personal del Cuerpo Técnico de Investigación de la fiscalía general de la Nación, entrenado en entrevista forense previa revisión del cuestionario por parte del defensor de familia"
+},
+{
+  pregunta: "los funcionarios de policía judicial realizan los actos urgentes dentro de una investigación penal, tanto estos actos urgentes como sus resultados deben ser presentadas al fiscal competente para que asuma la dirección, coordinación y control de la investigación. A través de un:",
+  opciones: [
+    "Reporte de iniciación",
+    "Informe ejecutivo",
+    "Programa metodológico",
+    "Informe de investigador de campo"
+  ],
+  respuestaCorrecta: "Informe ejecutivo"
+},
+{
+  pregunta: "víctima; en el desarrollo del mismo, uno de los funcionarios de policía judicial le señala a la víctima y le sugiere una de las persona de la fila para que tenga una idea clara de quién es el responsable y obtener un reconocimiento positivo, sin embargo el abogado defensor señala que este tipo de actuación es contraria a la ley. Teniendo en cuenta el código penal la posición del abogado es.",
+  opciones: [
+    "Incorrecta ya que los funcionarios de policía judicial pueden hacer señales o formular sugerencias para la identificación",
+    "Incorrecta ya que al tener claridad sobre la identidad del imputado el funcionario de policía judicial solamente estaba ayudando a la víctima en la identificación",
+    "Correcta ya que en la fila había dos imputados y según la ley solo podía estar uno.",
+    "Correcta ya que la policía judicial o cualquier otro interviniente, durante el reconocimiento, no podrá hacer señales o formular sugerencias para la identificación"
+  ],
+  respuestaCorrecta: "Correcta ya que la policía judicial o cualquier otro interviniente, durante el reconocimiento, no podrá hacer señales o formular sugerencias para la identificación"
+},
+{
+  pregunta: "con el fin de demostrar la autenticidad de los elementos materiales probatorios y evidencia física, la cadena de custodia se aplicará teniendo en cuenta los siguientes factores: identidad, estado original, condiciones de recolección, preservación, embalaje y envío; lugares y fechas de permanencia y los cambios que cada custodio haya realizado. Teniendo en cuenta lo anterior donde se inicia la cadena de custodia.",
+  opciones: [
+    "En el lugar de los hechos únicamente",
+    "En el lugar donde se descubran, recauden o encuentren los elementos materiales probatorios y evidencia física",
+    "En el desarrollo de los actos urgentes",
+    "En el lugar donde evidencie una prueba"
+  ],
+  respuestaCorrecta: "En el lugar donde se descubran, recauden o encuentren los elementos materiales probatorios y evidencia física"
+},
+{
+  pregunta: "donde finaliza la cadena de custodia.",
+  opciones: [
+    "Por orden del juez de control de garantías",
+    "En el laboratorio",
+    "Por orden de autoridad competente",
+    "En el momento en que se traslada al laboratorio"
+  ],
+  respuestaCorrecta: "Por orden de autoridad competente"
+},
+{
+  pregunta: "A quien le corresponde reglamentar lo relacionado con el diseño, aplicación y control del sistema de cadena de custodia, de acuerdo con los avances científicos, técnicos y artísticos.",
+  opciones: [
+    "Fiscal general de la nación",
+    "Congreso de la republica",
+    "Instituto colombiano de medicina legal y ciencias forenses",
+    "A la rama legislativa y ejecutiva"
+  ],
+  respuestaCorrecta: "Fiscal general de la nación"
+},
+{
+  pregunta: "La aplicación de la cadena de custodia es responsabilidad de",
+  opciones: [
+    "Cualquier ciudadano que entre en contacto con los elementos materiales probatorios y evidencia física",
+    "Únicamente los funcionarios de policía judicial que entren en contacto con los elementos materiales probatorios y evidencia física",
+    "Únicamente los funcionarios de la fiscalía que entren en contacto con los elementos materiales probatorios y evidencia física",
+    "Los servidores públicos que entren en contacto con los elementos materiales probatorios y evidencia física"
+  ],
+  respuestaCorrecta: "Los servidores públicos que entren en contacto con los elementos materiales probatorios y evidencia física"
+},
+{
+  pregunta: "Los particulares que por razón de su trabajo o por el cumplimiento de las funciones propias de su cargo, en especial el personal de los servicios de salud que entren en contacto con elementos materiales probatorios y evidencia física, son responsables por",
+  opciones: [
+    "recolección, preservación y entrega a la autoridad correspondiente",
+    "recolección, rotulación y embalaje a la autoridad correspondiente",
+    "recolección, embalaje y entrega a la autoridad correspondiente",
+    "recolección, rotulación y entrega a la autoridad correspondiente"
+  ],
+  respuestaCorrecta: "recolección, preservación y entrega a la autoridad correspondiente"
+},
+{
+  pregunta: "quienes deberán ordenar la destrucción de los materiales explosivos en el lugar del hallazgo, cuando las condiciones de seguridad lo permitan.",
+  opciones: [
+    "Únicamente el fiscal",
+    "Únicamente el juez de control de garantías",
+    "El fiscal, o en su defecto el juez de conocimiento",
+    "El fiscal, en su defecto los funcionarios de policía judicial"
+  ],
+  respuestaCorrecta: "El fiscal, en su defecto los funcionarios de policía judicial"
+},
+{
+  pregunta: "La certificación es la afirmación de que el elemento hallado en el lugar, fecha y hora indicados en el rótulo, es el que fue recogido por la policía judicial y que ha llegado al laboratorio y ha sido examinado por el perito o peritos. Además, que en todo momento ha estado custodiado. Quien certifica la cadena de custodia es.",
+  opciones: [
+    "El fiscal encargado de la investigación",
+    "Policía judicial y peritos",
+    "El juez de conocimiento en la audiencia de juicio oral",
+    "Únicamente los peritos"
+  ],
+  respuestaCorrecta: "Policía judicial y peritos"
+},
+{
+  pregunta: "Durante un ejercicio de entrenamiento en una base militar, un suboficial recibe la orden directa de su superior para liderar un pelotón en una operación de reconocimiento en un terreno montañoso. Sin embargo, el suboficial, asume una actitud violenta y decide no cumplir la orden. Teniendo en cuenta el código penal militar el suboficial estaría cometiendo el delito de.",
+  opciones: [
+    "Ataque al superior",
+    "Desobediencia",
+    "Insubordinación",
+    "Desacato"
+  ],
+  respuestaCorrecta: "Insubordinación"
+},
+{
+  pregunta: "Un oficial de alto rango exige dinero a los civiles a cambio de garantizar su seguridad personal en una zona de conflicto controlada por las fuerzas armadas. Teniendo en cuenta el código penal militar el oficial cometido el delito de",
+  opciones: [
+    "Saqueo",
+    "Requisición arbitraria",
+    "Exacción",
+    "Abuso de autoridad especial"
+  ],
+  respuestaCorrecta: "Exacción"
+},
+{
+  pregunta: "En zona rural del departamento del cauca soldados han recibido el abastecimiento de víveres oportunamente; sin embargo, Un soldado toma provisiones de comida de una tienda local para alimentar a su unidad militar de manera arbitraria y sin el consentimiento del propietario ni una orden. Dicho soldado estaría cometiendo el delito de",
+  opciones: [
+    "Exacción",
+    "Requisición arbitraria",
+    "Saqueo",
+    "Hurto agravado"
+  ],
+  respuestaCorrecta: "Requisición arbitraria"
+},
+{
+  pregunta: "En zona rural del departamento del cauca soldados han recibido el abastecimiento de víveres oportunamente; sin embargo, Un soldado toma provisiones de comida de una tienda local para alimentar a su unidad militar de manera arbitraria y sin el consentimiento del propietario ni una orden. Dicho soldado estaría cometiendo el delito de",
+  opciones: [
+    "Exacción",
+    "Requisición arbitraria",
+    "Saqueo",
+    "Hurto agravado"
+  ],
+  respuestaCorrecta: "Requisición arbitraria"
+},
+{
+  pregunta: "Durante un ejercicio de práctica de tiro en un campo de entrenamiento militar, un soldado, en un acto de desobediencia deliberada, decide dañar intencionalmente su arma de fuego, desmontando partes esenciales y ocultándolas en el terreno. Posteriormente, durante una inspección de armamento, el soldado informa falsamente que su arma se dañó accidentalmente durante el ejercicio de tiro. ¿Cuál es el delito que mejor describe la acción del soldado?",
+  opciones: [
+    "Destrucción de propiedad militar.",
+    "Sabotaje por inutilización o destrucción",
+    "Abandono del puesto.",
+    "Inutilización voluntaria."
+  ],
+  respuestaCorrecta: "Sabotaje por inutilización o destrucción"
+},
+{
+  pregunta: "Durante una inspección de rutina en un depósito militar, un soldado encargado del mantenimiento de vehículos de combate decide, como acto de protesta contra sus superiores, desactivar intencionalmente el motor de un tanque utilizando herramientas disponibles en el taller. El soldado luego informa falsamente que el daño al tanque fue el resultado de un fallo mecánico durante una prueba de rendimiento. ¿Cuál es el delito que mejor describe la acción del soldado?",
+  opciones: [
+    "Desobediencia militar.",
+    "Inutilización voluntaria.",
+    "Sabotaje por inutilización destrucción",
+    "Incumplimiento de deber oficial."
+  ],
+  respuestaCorrecta: "Sabotaje por inutilización destrucción"
+},
+{
+  pregunta: "Durante una operación militar en una zona de conflicto, un soldado, abrumado por el miedo y la incertidumbre, decide abandonar su unidad sin autorización y huir del campo de batalla. Su acción deja a sus compañeros de equipo en una situación vulnerable y compromete la seguridad de la misión. Horas después, es encontrado escondido en un área boscosa cercana. ¿Cuál es el delito que mejor describe la acción del soldado?",
+  opciones: [
+    "Cobardía.",
+    "Deserción.",
+    "Insubordinación.",
+    "Abandono del servicio."
+  ],
+  respuestaCorrecta: "Cobardía."
+},
+{
+  pregunta: "En el marco de la Ley 1755 de 2015 en Colombia, un ciudadano preocupado por la contaminación de un río cercano a su comunidad presenta una solicitud formal ante la autoridad ambiental competente para obtener información sobre las medidas tomadas para controlar la calidad del agua. Después de un mes sin respuesta, decide presentar una queja ante la Defensoría del Pueblo. ¿Qué derecho fundamental está ejerciendo el ciudadano en este caso?",
+  opciones: [
+    "Derecho a la salud.",
+    "Derecho a la educación.",
+    "Derecho a la participación ciudadana.",
+    "Derecho de petición."
+  ],
+  respuestaCorrecta: "Derecho de petición."
+},
+{
+  pregunta: "Un grupo de ciudadanos está preocupado por la gestión de los fondos públicos en su municipio y decide ejercer su derecho de petición de información. Presentan una solicitud formal ante la alcaldía solicitando acceso y copia a los registros financieros y presupuestarios del municipio, así como a los informes de gastos de los funcionarios públicos. Por lo que la entidad debe.",
+  opciones: [
+    "resolverla dentro de los diez (10) días siguientes a su recepción.",
+    "resolver dentro de los treinta (30) días siguientes a su recepción.",
+    "resolverse dentro de los quince (15) días siguientes a su recepción.",
+    "Resolverla de manera preferencial"
+  ],
+  respuestaCorrecta: "resolverla dentro de los diez (10) días siguientes a su recepción."
+},
+{
+  pregunta: "En virtud del principio de eficacia, cuando la autoridad constate que una petición ya radicada está incompleta o que el peticionario deba realizar una gestión de trámite a su cargo, necesaria para adoptar una decisión de fondo, y que la actuación pueda continuar sin oponerse a la ley deberá.",
+  opciones: [
+    "requerirá al peticionario dentro de los diez (10) días siguientes a la fecha de radicación para que la complete en el término máximo de un (1) mes.",
+    "devolverá al interesado la petición para que la corrija o aclare dentro de los diez (10) días siguientes.",
+    "podrá remitirse a las respuestas anteriores",
+    "requerirá al peticionario dentro de los quince (15) días siguientes a la fecha de radicación para que la complete en el término máximo de 30 días"
+  ],
+  respuestaCorrecta: "requerirá al peticionario dentro de los diez (10) días siguientes a la fecha de radicación para que la complete en el término máximo de un (1) mes."
+},
+{
+  pregunta: "De acuerdo al manual de patrullaje urbano se hayan unas características para el buen desarrollo del mismo. Cual de las siguientes es una de ellas",
+  opciones: [
+    "Sector, extensión de terreno que ha de cubrir con vigilancia el personal policial durante su servicio",
+    "Que puede ser preventivo, disuasivo o reactivo",
+    "Duración en turnos de 8 horas",
+    "Conocimiento de la jurisdicción a través de la memoria local y topográfica"
+  ],
+  respuestaCorrecta: "Que puede ser preventivo, disuasivo o reactivo"
+},
+{
+  pregunta: "el patrullaje urbano de acuerdo con la actividad que depende de un diagnóstico que convivencia y seguridad ciudadana es.",
+  opciones: [
+    "Preventivo",
+    "Disuasivo",
+    "Reactivo",
+    "Control"
+  ],
+  respuestaCorrecta: "Preventivo"
+},
+{
+  pregunta: "Consiste en ubicar patrullas sobre los semáforos en los principales corredores viales de la jurisdicción. Cuando los semáforos se encuentren con la luz roja para los vehículos, se procede a practicar el registro a un vehículo selectivamente y la identificación de sus ocupantes.",
+  opciones: [
+    "Plan preventivo 1",
+    "Plan disuasivo 4",
+    "Plan reactivo 2",
+    "Plan disuasivo 3"
+  ],
+  respuestaCorrecta: "Plan disuasivo 3"
+},
+{
+  pregunta: "Consiste en adelantar recorridos preferiblemente por patrullas en motocicleta, dando prioridad a los principales corredores viales de la jurisdicción, en aras de mejorar la percepción de seguridad y como medida preventiva para evitar que se cometan delitos contra el patrimonio económico. Es conveniente dar aplicación a este plan en los horarios de apertura y cierre bancario; en su desarrollo se debe realizar de manera selectiva registro a vehículos y motocicleta",
+  opciones: [
+    "Plan preventivo 1",
+    "Plan disuasivo 4",
+    "Plan reactivo 2",
+    "Plan disuasivo 1"
+  ],
+  respuestaCorrecta: "Plan disuasivo 1"
+},
+{
+  pregunta: "consiste en ubicar vehículos policiales en sitios estratégicos (puentes peatonales, intersecciones, circunvalares, centros comerciales), con la baliza encendida y el personal uniformado fuera del vehículo en actitud de prevención, prestando seguridad a las personas que deambulan por estos sectores",
+  opciones: [
+    "Plan preventivo 1",
+    "Plan disuasivo 4",
+    "Plan reactivo 2",
+    "Plan disuasivo 1"
+  ],
+  respuestaCorrecta: "Plan preventivo 1"
+},
+{
+  pregunta: "Consiste en ubicar patrullas en sitios críticos de la jurisdicción, conformadas por un mínimo de cuatro uniformados, los cuales abordan vehículos de transporte público (buses, busetas, colectivos), para practicar registros e identificación de personas en su interior",
+  opciones: [
+    "Plan preventivo 1",
+    "Plan disuasivo 2",
+    "Plan reactivo 2",
+    "Plan disuasivo 1"
+  ],
+  respuestaCorrecta: "Plan disuasivo 2"
+},
+{
+  pregunta: "En el patrullaje en motocicleta, En el evento de llevar a cabo un procedimiento policial será el encargado de extremar en todo momento las medidas de seguridad personal, desenfundando el arma en posición preventiva para reaccionar en caso necesario.",
+  opciones: [
+    "conductor",
+    "tripulante",
+    "comandante",
+    "acompañante"
+  ],
+  respuestaCorrecta: "tripulante"
+}
+                    // Agrega más preguntas para el Nivel 4 aquí
+                ]
+            },
+            {
+                nivel: 5,
+                preguntas: [
+                {
+  pregunta: "en el patrullaje en vehículo es el uniformado que acompaña al comandante de la patrulla, el cual será el encargado de adelantar los registros en los procedimientos que se adelanten durante el turno.",
+  opciones: [
+    "conductora",
+    "tripulante",
+    "comandante",
+    "acompañante"
+  ],
+  respuestaCorrecta: "tripulante"
+},
+{
+  pregunta: "en el patrullaje en motocicleta Será el encargado de practicar los registros necesarios, en forma minuciosa sin vulnerar la dignidad humana, verifica la documentación y los antecedentes. El policial debe llevar las manos libres de elementos que lo puedan distraer o impedir reaccionar.",
+  opciones: [
+    "conductor",
+    "tripulante",
+    "comandante",
+    "acompañante"
+  ],
+  respuestaCorrecta: "conductor"
+},
+{
+  pregunta: "de acuerdo al tomo 2.2 la identificación de situaciones cotidianas y novedosas en la comunidad. alteración en los horarios de funcionamiento de los establecimientos comerciales, cambio en las rutas de transporte público, circulación de personas, población flotante, variaciones en el consumo por parte de las personas y hogares, acontecimientos culturales, eventos recreacionales, cambios en los comportamientos sociales y cambios en el entorno físico. se refiere a que actividad?",
+  opciones: [
+    "Observación directa",
+    "Actividades que las patrullas deben realizar",
+    "Recorrido del cuadrante",
+    "Planes especiales de seguridad ciudadana orientados a la prevención"
+  ],
+  respuestaCorrecta: "Observación directa"
+},
+{
+  pregunta: "El operador del CIEPS debe contar con unas competencias que le permita desarrollar su trabajo de manera completa y eficiente. Cuál de las siguientes No es una de ellas",
+  opciones: [
+    "Conocimiento básico en informática y herramientas “Office”.",
+    "Competencias básicas en análisis criminológico.",
+    "Manejo básico de sistemas de información geográfica",
+    "Liderazgo y supervisión de grupos"
+  ],
+  respuestaCorrecta: "Liderazgo y supervisión de grupos"
+},
+{
+  pregunta: "La cantidad mínima de personal que debe estar asignado al CIEPS, obedece al número de cuadrantes que conforman cada estación de policía. Si la estación de policía tiene 50 cuadrantes, cual es el número de personal asignado al CIEPS.",
+  opciones: [
+    "3 operadores 5 analistas",
+    "1 operador 1 analista",
+    "3 operadores 4 analistas",
+    "2 operadores 3 analistas"
+  ],
+  respuestaCorrecta: "3 operadores 4 analistas"
+},
+{
+  pregunta: "La cantidad mínima de personal que debe estar asignado al CIEPS, obedece al número de cuadrantes que conforman cada estación de policía. Si la estación de policía tiene de 16 a 40 cuadrantes, cual es el número de personal asignado al CIEPS.",
+  opciones: [
+    "3 operadores 5 analistas",
+    "1 operador 1 analista",
+    "3 operadores 4 analistas",
+    "2 operadores 3 analistas"
+  ],
+  respuestaCorrecta: "2 operadores 3 analistas"
+},
+{
+  pregunta: "muestra los límites del cuadrante y presenta un resumen de la situación delictiva del cuadrante, con el objeto de que el personal comprenda mejor las condiciones de seguridad y convivencia de la jurisdicción en el cual presta su servicio a la ciudadanía.",
+  opciones: [
+    "TAMIR",
+    "Hoja de servicio",
+    "Georreferenciación de los cuadrantes",
+    "Diagnóstico para la focalización y priorización del servicio"
+  ],
+  respuestaCorrecta: "Hoja de servicio"
+},
+{
+  pregunta: "es la herramienta en la cual se establecen las actividades detalladas que la patrulla deberá desarrollar durante su turno de vigilancia. Estas actividades tendrán una relación directa con las problemáticas y las condiciones de tiempo, modo y lugar descritas en la hoja de servicio.",
+  opciones: [
+    "TAMIR",
+    "Hoja de servicio",
+    "Georreferenciación de los cuadrantes",
+    "Diagnóstico para la focalización y priorización del servicio"
+  ],
+  respuestaCorrecta: "TAMIR"
+},
+{
+  pregunta: "Durante un recorrido en el cuadrante, la patrulla nota que un grupo de personas ha comenzado a reunirse regularmente en un parque del sector, fuera del horario habitual. La patrulla decide acercarse, conversar con los presentes e intercambiar números telefónicos. Además, toman nota del nuevo comportamiento social. De acuerdo con el modelo de vigilancia comunitaria por cuadrantes, ¿cuáles de las siguientes actividades está desarrollando la patrulla?",
+  opciones: [
+    "Recorrido del cuadrante y observación directa.",
+    "Observación directa e identificación de líderes sociales.",
+    "Recorrido del cuadrante e intervención operativa.",
+    "Intervención operativa e identificación de líderes sociales"
+  ],
+  respuestaCorrecta: "Recorrido del cuadrante y observación directa."
+},
+{
+  pregunta: "Una patrulla del cuadrante visita una junta de acción comunal donde están reunidos representantes de asociaciones de padres de familia, líderes juveniles y delegados de iglesias del sector. Allí, los policías se presentan, recogen información de contacto y acuerdan canales de comunicación permanente. Según el modelo de vigilancia comunitaria por cuadrantes, ¿qué actividad está desarrollando principalmente la patrulla?",
+  opciones: [
+    "Observación directa.",
+    "Recorrido del cuadrante.",
+    "Identificación de líderes sociales.",
+    "Recolección de pruebas testimoniales."
+  ],
+  respuestaCorrecta: "Identificación de líderes sociales."
+},
+{
+  pregunta: "Durante un evento deportivo en el estadio municipal, se reportan múltiples casos de hurto a celulares. Los delincuentes aprovechan las aglomeraciones para actuar y luego se dispersan entre la multitud. La Policía del cuadrante identifica que estos hechos se presentan solo cuando hay eventos masivos en el lugar. Según la clasificación de puntos críticos, ¿qué tipo de punto crítico representa este escenario?",
+  opciones: [
+    "Punto crítico que atrae a los infractores.",
+    "Punto crítico facilitador de infracciones.",
+    "Punto crítico que genera oportunidades para cometer infracciones.",
+    "Punto crítico estructural."
+  ],
+  respuestaCorrecta: "Punto crítico que genera oportunidades para cometer infracciones."
+},
+{
+  pregunta: "En una zona del barrio San Antonio se ha detectado una constante presencia de personas vendiendo y consumiendo drogas. Aunque no hay eventos masivos ni problemas visibles en el espacio público, los infractores frecuentan este lugar por ser conocido entre ellos como punto de expendio. La patrulla observa que la mayoría de delitos en el cuadrante ocurren en ese sector específico. Según la clasificación de los puntos críticos, ¿cómo debe categorizarse esta zona?",
+  opciones: [
+    "Punto crítico facilitador de infracciones.",
+    "Punto crítico que genera oportunidades para cometer infracciones.",
+    "Punto crítico que atrae a los infractores.",
+    "Punto crítico ocasional."
+  ],
+  respuestaCorrecta: "Punto crítico que atrae a los infractores."
+},
+{
+  pregunta: "En una reunión semanal del comité de vigilancia de una metropolitana, se analiza el aumento de hurtos a personas en una zona priorizada del cuadrante 3. Luego de estudiar los datos del CIEPS y los informes de patrullaje, se decide implementar un plan conjunto con la Policía de Infancia y Adolescencia y la SIJIN, además de coordinar acciones con la Secretaría de Seguridad local. Las decisiones son incluidas en las hojas de servicio (HS) y TAMIR de los patrulleros del cuadrante. ¿Cuál es el objetivo principal del comité de vigilancia en este caso?",
+  opciones: [
+    "Registrar estadísticamente todos los delitos y contravenciones de la zona.",
+    "Ejecutar tareas operativas de vigilancia y control de manera inmediata.",
+    "Coordinar acciones interinstitucionales para abordar un problema específico de seguridad.",
+    "Evaluar el desempeño individual de los patrulleros del cuadrante."
+  ],
+  respuestaCorrecta: "Coordinar acciones interinstitucionales para abordar un problema específico de seguridad."
+},
+{
+  pregunta: "Los protocolos del “ESTATUTO DE REACCIÓN, USO Y VERIFICACIÓN DE LA FUERZA LEGÍTIMA DEL ESTADO Y PROTECCIÓN DEL DERECHO A LA PROTESTA PACÍFICA CIUDADANA” son:",
+  opciones: [
+    "Protocolo antes, durante y después",
+    "Protocolo de acciones preventivas, concomitantes y posteriores",
+    "Protocolo de uso escalonado del uso de la fuerza y protocolo de intervención",
+    "Protocolo de servicio rural y urbano de intervención policial antes y después de manifestaciones"
+  ],
+  respuestaCorrecta: "Protocolo de acciones preventivas, concomitantes y posteriores"
+},
+{
+  pregunta: "¿El anterior texto hace referencia al siguiente principio de la actuación de las autoridades de policía en manifestaciones públicas?",
+  opciones: ["Proporcionalidad", "Uso de la fuerza", "Diferenciación", "Uso diferenciado de la fuerza"],
+  respuestaCorrecta: "Diferenciación"
+},
+{
+  pregunta: "¿Esta acción corresponde a?",
+  opciones: ["Acciones concomitantes", "Servicio de policía rural", "Acciones preventivas", "Acciones durante y después de eventos"],
+  respuestaCorrecta: "Acciones preventivas"
+},
+{
+  pregunta: "El PMU puesto de mando unificado está integrado por los representantes de las siguientes entidades:",
+  opciones: ["Alcaldía, defensoría del pueblo, policía nacional, secretario de gobierno, derechos humanos", "Gobernación, Alcaldía, Policía Nacional, Bomberos, Contraloría, Personería, Procuraduría, Fiscalía", "Alcaldía, Policía Nacional, Bomberos, Defensa Civil, Personería, Procuraduría, Bomberos, Fiscalía", "Alcaldía, Defensoría del Pueblo, Personería, Procuraduría, Bomberos, Fiscalía"],
+  respuestaCorrecta: "Alcaldía, Defensoría del Pueblo, Personería, Procuraduría, Bomberos, Fiscalía"
+},
+{
+  pregunta: "La Mesa Nacional de evaluación de las garantías para las manifestaciones públicas será convocada por:",
+  opciones: ["Ministro de defensa", "Ministro del interior", "Ministro de desarrollo social", "Ministro de transporte"],
+  respuestaCorrecta: "Ministro del interior"
+},
+{
+  pregunta: "Cuando se requiera cualquier participación del Escuadrón Móvil Antidisturbios ESMAD en eventos públicos, ese organismo de manera antelada, deberá entregar el listado de los comandantes o jefes de unidad del personal asignado para el servicio, a disposición de:",
+  "opciones": ["Procurador General de la Nación", "Comandante del ejército o brigada", "Defensor del pueblo", "Fiscalía General de la Nación"],
+  "respuestaCorrecta": "Defensor del pueblo"
+},
+{
+  pregunta: "“Las manifestaciones públicas terminarán cuando los manifestantes voluntariamente decidan retirarse de los espacios públicos en los que se han reunido y la congregación de las manifestaciones vayan disminuyendo paulatinamente o en aquellas situaciones en que deban ser disueltas por presentarse actos de violencia que alteren gravemente el orden público y la convivencia”. El anterior texto es…",
+  opciones: ["Verdadero", "Falso"],
+  respuestaCorrecta: "Verdadero"
+},
+{
+  pregunta: "Actuación del Escuadrón Móvil Antidisturbios – ESMAD, en el marco de las manifestaciones públicas y pacíficas, el personal del ESMAD estará ubicado en sitios estratégicos que permitan una acción oportuna frente a actos",
+  opciones: ["Verdadero", "Falso"],
+  respuestaCorrecta: "Falso"
+},
+{
+  pregunta: "Actuación del Escuadrón Móvil Antidisturbios – ESMAD, en el marco de las manifestaciones públicas y pacíficas, el personal del ESMAD estará ubicado en sitios estratégicos que permitan una acción oportuna frente a actos de violencia a fin de restablecer la convivencia. Su actuación será ordenada por:",
+  opciones: ["Comandante de Estación o distrito", "Defensor del pueblo", "Alcaldes distritales o municipales", "Secretario de Gobierno"],
+  respuestaCorrecta: "Alcaldes distritales o municipales"
+},
+{
+  pregunta: "Cuál es la entidad o funcionarios con atribución en el marco de sus competencias constitucionales y legales y de acuerdo con sus directrices institucionales, a iniciativa propia o a solicitud, podrán realizar verificaciones previas de la identificación y los elementos de dotación con los que cuentan los policías asignados para el acompañamiento de las movilizaciones, así como de las órdenes de servicio.",
+  opciones: [
+    "Comisión de verificación de la sociedad civil CV",
+    "Fiscalía General de la Nación",
+    "Misión periodística y veedores",
+    "Ministerio Público"
+  ],
+  respuestaCorrecta: "Ministerio Público"
+},
+{
+  pregunta: "La Constitución Política establece que 'Toda parte del pueblo puede reunirse y manifestarse pública y pacíficamente. Solo la ley podrá establecer de manera expresa los casos en los cuales se podrá limitar el ejercicio de este derecho'. ¿En qué artículo de la Constitución Política se encuentra establecido el anterior texto?",
+  opciones: [
+    "ARTÍCULO 27",
+    "ARTÍCULO 39",
+    "ARTÍCULO 37",
+    "ARTÍCULO 47"
+  ],
+  respuestaCorrecta: "ARTÍCULO 37"
+},
+{
+  pregunta: "El operador del CIEPS debe contar con unas competencias que le permita desarrollar su trabajo de manera completa y eficiente. ¿Cuál de las siguientes NO es una de ellas?",
+  opciones: [
+    "Conocimiento básico en informática y herramientas 'Office'.",
+    "Competencias básicas en análisis criminológico.",
+    "Manejo básico de sistemas de información geográfica",
+    "Liderazgo y supervisión de grupos"
+  ],
+  respuestaCorrecta: "Liderazgo y supervisión de grupos"
+},
+{
+  pregunta: "Andrés publicó en sus redes sociales una crítica fuerte contra una decisión del Congreso. Días después, fue citado por la Fiscalía bajo el argumento de que \"sus palabras podrían incitar al desorden público\". Según la Constitución, ¿qué derecho se pondría en riesgo si la Fiscalía insiste en sancionar a Andrés?",
+  opciones: ["Derecho al debido proceso", "Libertad de expresión", "Derecho a la intimidad", "Libertad de conciencia"],
+  respuestaCorrecta: "Libertad de expresión"
+},
+{
+  pregunta: "Una comunidad afrocolombiana organiza una manifestación pacífica para exigir el respeto de sus territorios ancestrales. La Alcaldía local decide disolver la protesta sin justificación legal. ¿Qué derecho constitucional se estaría vulnerando?",
+  opciones: ["Derecho a la igualdad ante la ley", "Derecho de asociación", "Derecho de reunión y manifestación pacífica", "Derecho a la propiedad privada"],
+  respuestaCorrecta: "Derecho de reunión y manifestación pacífica"
+},
+{
+  pregunta: "Una grave alteración del orden público ocurre en varias ciudades del país por enfrentamientos entre grupos armados ilegales. La Policía es superada y hay riesgo para la integridad de la población. Ante esto, el presidente, con la firma de todos los ministros, decide tomar el control con medidas que restringen ciertos derechos y militarizar las ciudades por un mes. ¿Qué tipo de estado de excepción está aplicando el Presidente según el artículo 213 de la Constitución?",
+  opciones: ["Estado de emergencia", "Estado de sitio", "Estado de conmoción interior", "Estado de guerra externa"],
+  respuestaCorrecta: "Estado de conmoción interior"
+},
+{
+  pregunta: "La Presidencia expide un decreto para enfrentar una grave crisis ambiental que afecta a varias regiones del país. En este decreto se toman decisiones que usualmente solo puede aprobar el Congreso. ¿Cuál es la figura constitucional que permite esta actuación?",
+  opciones: ["Estado de emergencia económica, social y ecológica", "Estado de sitio", "Reforma legislativa por vía rápida", "Ley estatutaria"],
+  respuestaCorrecta: "Estado de emergencia económica, social y ecológica"
+},
+{
+  pregunta: "Diana, mujer trans, fue rechazada como candidata al consejo estudiantil de su colegio bajo el argumento de que \"no representaba los valores institucionales\". ¿A qué derecho fundamental, protegido por la Constitución, se estaría oponiendo esa decisión?",
+  opciones: ["Derecho a la libertad de cultos", "Derecho a elegir y ser elegido", "Derecho a la educación", "Derecho al libre desarrollo de la personalidad"],
+  respuestaCorrecta: "Derecho a elegir y ser elegido"
+},
+{
+  pregunta: "El país enfrenta una grave crisis económica tras una emergencia ambiental de gran escala. Se requiere suspender temporalmente algunos contratos públicos y reasignar fondos del presupuesto nacional sin aprobación previa del Congreso. El presidente expide un decreto con fuerza de ley. Según el artículo 215 de la Constitución, ¿cuál es la figura constitucional que permite esta medida?",
+  opciones: ["Estado de emergencia económica social y ecológica.", "Estado de conmoción interior", "Estado de excepción presupuestaria", "Decreto legislativo autónomo"],
+  respuestaCorrecta: "Estado de emergencia económica social y ecológica."
+},
+{
+  pregunta: "En una región del país, se presentan bloqueos de vías, ataques a infraestructuras públicas y desabastecimiento de alimentos debido a un paro armado organizado por grupos ilegales. La situación desborda la capacidad de las autoridades locales. El presidente decide declarar un estado de excepción en esa zona durante 30 días, mediante decreto firmado por todos los ministros, para restablecer el orden y garantizar la seguridad. Según el artículo 213 de la Constitución, ¿qué condiciones hacen legítima esta declaratoria de estado de conmoción interior?",
+  opciones: ["Que exista un conflicto internacional que amenace la soberanía nacional.", "Que se afecte el orden económico y se requieran medidas fiscales urgentes.", "Que haya una grave perturbación del orden público que no pueda ser conjurada con los poderes ordinarios de policía.", "Que se presente una calamidad pública de gran magnitud."],
+  respuestaCorrecta: "Que haya una grave perturbación del orden público que no pueda ser conjurada con los poderes ordinarios de policía."
+},
+{
+  pregunta: "El reglamento de guarnición y control establece que Se podrán organizar, con autorización de la Dirección General de la Policía Nacional, dos (2) o más Comandos Operativos de Seguridad Ciudadana en las policías metropolitanas o departamentos de policía, por ello si en un departamento de policía se autoriza la creación de dos (2) o más Comandos Operativos de Seguridad Ciudadana, de considerarlo necesario, se podrá eliminar la figura de los distritos, quedando las estaciones, subestaciones, Comandos de Atención Inmediata - CAI y puestos de policía, bajo la subordinación y control de los mismos. Lo anterior es:\na. Correcto ya que en los lugares donde exista mas de un comando operativo de seguridad ciudadana no es necesario crear distritos de policía\nb. Incorrecto ya que el reglamento de guarnición solo permite la existencia de un comando operativo de seguridad ciudadana tanto en las metropolitanas como en los departamentos\nc. Incorrecto ya que el reglamento de guarnición y servicio solo permite la eliminación de los distritos en las policías metropolitanas donde se autorice la creación de 2 o más comandos operativos\nd. Correcto ya que el reglamento de guarnición y servicio solo permite la eliminación de los distritos en los departamentos de policía donde se autorice la creación de 2 o más comandos operativos",
+  opciones: [
+    "Correcto ya que en los lugares donde exista mas de un comando operativo de seguridad ciudadana no es necesario crear distritos de policía",
+    "Incorrecto ya que el reglamento de guarnición solo permite la existencia de un comando operativo de seguridad ciudadana tanto en las metropolitanas como en los departamentos",
+    "Incorrecto ya que el reglamento de guarnición y servicio solo permite la eliminación de los distritos en las policías metropolitanas donde se autorice la creación de 2 o más comandos operativos",
+    "Correcto ya que el reglamento de guarnición y servicio solo permite la eliminación de los distritos en los departamentos de policía donde se autorice la creación de 2 o más comandos operativos"
+  ],
+  respuestaCorrecta: "Correcto ya que el reglamento de guarnición y servicio solo permite la eliminación de los distritos en los departamentos de policía donde se autorice la creación de 2 o más comandos operativos"
+},
+{
+  pregunta: "El comandante de una estación policial afirma que su unidad no tiene competencia para intervenir fuera de su jurisdicción. Con base en el artículo 3, ¿qué es la “jurisdicción” para efectos del reglamento?",
+  opciones: [
+    "El área en la que opera exclusivamente el CAI local.",
+    "El área geográfica asignada a una unidad policial para ejercer control y responsabilidad del servicio.",
+    "El perímetro urbano del municipio donde está la estación.",
+    "El conjunto de dependencias administrativas bajo su mando."
+  ],
+  respuestaCorrecta: "El área geográfica asignada a una unidad policial para ejercer control y responsabilidad del servicio."
+},
+{
+  pregunta: "El subintendente Chávez debe designar un policía para una comisión en un consulado colombiano en el extranjero. Durante una reunión, se le pregunta si debe responder el subintendente. Según el artículo 1 de la Resolución 0242 de 2023, ¿cómo debe responder el subintendente?",
+  opciones: [
+    "No aplica, porque está fuera del territorio nacional.",
+    "Aplica solo si el consulado se lo ordena.",
+    "Sí aplica, ya que la norma contempla el ejercicio del servicio incluso en comisiones en el exterior.",
+    "Solo aplica si hay convenio con la policía del país receptor."
+  ],
+  respuestaCorrecta: "Sí aplica, ya que la norma contempla el ejercicio del servicio incluso en comisiones en el exterior."
+},
+{
+  pregunta: "Durante una visita del Presidente de la República a una zona fronteriza, se planea un despliegue de seguridad conjunto con las Fuerzas Militares y organismos de inteligencia del Estado. La operación incluye varias jurisdicciones departamentales y metropolitanas, y debe ser coordinada desde un nivel superior que permita garantizar una articulación efectiva, resultados oportunos y supervisión del cumplimiento de las órdenes impartidas por la Dirección General.\n\nCon base en la situación planteada, ¿quién debe asumir la planificación y conducción de esta operación?",
+  opciones: [
+    "El Comandante de Policía Metropolitana, porque es quien dirige las operaciones en la ciudad capital de ese departamento.",
+    "El Comandante de Departamento de Policía, porque es el encargado del orden público en su zona.",
+    "El Comandante de Región, porque tiene la responsabilidad de planificar operaciones conjuntas de trascendencia institucional en varias jurisdicciones.",
+    "El Comandante Operativo de Seguridad Ciudadana, porque lidera a los grupos desconcentrados en el terreno."
+  ],
+  respuestaCorrecta: "El Comandante de Región, porque tiene la responsabilidad de planificar operaciones conjuntas de trascendencia institucional en varias jurisdicciones."
+},
+{
+  pregunta: "Un oficial, con 20 años de experiencia operativa y título de la Academia Superior de Policía, es designado como comandante de región.\n\nSegún el artículo 10, ¿quién de los siguientes podría haberlo designado legalmente?",
+  opciones: [
+    "El Consejo de Estado",
+    "El Congreso de la República",
+    "El Presidente, el Ministro de Defensa o el Director General de la Policía",
+    "El Alcalde Mayor de Bogotá"
+  ],
+  respuestaCorrecta: "El Presidente, el Ministro de Defensa o el Director General de la Policía"
+}
+
+                    // Agrega más preguntas para el Nivel 5 aquí
+                ]
+            },
+            {
+                nivel: 6,
+                preguntas: [
+                {
+  pregunta: "¿Cuál de las siguientes funciones le corresponde al Oficial de Guarnición según el reglamento?",
+  opciones: [
+    "Dictar sanciones disciplinarias a patrulleros en servicio.",
+    "Llevar personalmente los casos judiciales a la Fiscalía.",
+    "Supervisar el servicio de vigilancia y registrar actividades en el libro correspondiente.",
+    "Reemplazar al comandante de distrito en caso de ausencia."
+  ],
+  respuestaCorrecta: "Supervisar el servicio de vigilancia y registrar actividades en el libro correspondiente."
+}, 
+{
+  pregunta: "¿A qué servicio corresponde esta función? Durante su turno, el oficial efectúa revista a las unidades dentro de su jurisdicción, verifica el funcionamiento del servicio de vigilancia de las patrullas, supervisando la correcta disposición del personal y del equipo, y deja constancia de todo en el libro correspondiente. Además, asesora personalmente casos policiales sensibles que requieren precaución.",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial de Inspección",
+    "Oficial de semana",
+    "Oficial general de semana"
+  ],
+  respuestaCorrecta: "Oficial de Guarnición"
+},
+{
+  pregunta: "Durante una inspección en una unidad policial, un oficial superior realiza una revisión detallada de las medidas de seguridad en las instalaciones, verifica la capacidad de reacción de las unidades ante posibles emergencias y reporta por escrito todas las novedades antes de su relevo. Además, asume las medidas necesarias para mejorar la efectividad del servicio policial y verifica el cumplimiento de las funciones propias del servicio policial en la jurisdicción. ¿A cuál oficial corresponde esta función?",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial de Inspección",
+    "Oficial de Semana"
+  ],
+  respuestaCorrecta: "Oficial de Inspección"
+},
+{
+  pregunta: "Durante la formación matutina en una unidad policial, se detecta que un patrullero no se presenta al servicio y no aparece justificación en el sistema. Se desconoce si está con permiso, excusa médica o ausente sin autorización. ¿Quién es el oficial encargado de conocer y reportar esta novedad del personal?",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial de Inspección",
+    "Oficial de Semana",
+    "Oficial de servicio"
+  ],
+  respuestaCorrecta: "Oficial de Semana"
+},
+{
+  pregunta: "Durante su servicio, el oficial verifica el parte de personal adscrito a la unidad, controla las formaciones, revisa el estado de aseo y presentación de las instalaciones, y supervisa el estado anímico y presentación personal del personal policial. También informa al jefe de la unidad sobre cualquier novedad relacionada con permisos, franquicias o excusas del servicio. ¿A qué servicio corresponde esta función?",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial de Inspección",
+    "Oficial de Semana",
+    "Oficial general de semana"
+  ],
+  respuestaCorrecta: "Oficial de Semana"
+},
+{
+  pregunta: "El oficial asignado verifica las medidas de seguridad vigentes respecto al personal y a las instalaciones policiales de su unidad. Durante su recorrido, constata que una estación presenta fallas en los protocolos de acceso restringido, por lo cual asume medidas inmediatas para mejorar la efectividad del servicio y luego informa a los mandos superiores sobre lo ocurrido. ¿A qué servicio corresponde esta función?",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial de Inspección",
+    "Oficial de semana",
+    "Oficial general de semana"
+  ],
+  respuestaCorrecta: "Oficial de semana"
+},
+{
+  pregunta: "¿Cuál oficial debe efectuar revista a las unidades de la jurisdicción para verificar el funcionamiento de los servicios de información y seguridad de las instalaciones, supervisar la vigilancia de las patrullas y registrar las consignas y novedades durante un servicio?",
+  opciones: [
+    "Oficial de Inspección",
+    "Oficial de Guarnición",
+    "Oficial de Servicio",
+    "Oficial General de Semana"
+  ],
+  respuestaCorrecta: "Oficial de Guarnición"
+},
+{
+  pregunta: "Un oficial debe ejercer control sobre el comportamiento del personal en servicio, informando a su superior inmediato en caso de novedades y, si los hechos involucran a un oficial de mayor rango, hacer recomendaciones y elevar el reporte si no son atendidas. ¿Qué oficial está cumpliendo esta función?",
+  opciones: [
+    "Oficial de Servicio",
+    "Oficial de Inspección",
+    "Oficial de Guarnición",
+    "Oficial General de Semana"
+  ],
+  respuestaCorrecta: "Oficial de Guarnición"
+},
+{
+  pregunta: "¿Cuál oficial es responsable de presidir la relación general semanal en las instalaciones de la Dirección General y actualizar al personal en temas de importancia institucional?",
+  opciones: [
+    "Oficial de Guarnición",
+    "Oficial General de Semana",
+    "Oficial de Inspección",
+    "Oficial de Servicio"
+  ],
+  respuestaCorrecta:  "Oficial General de Semana"
+},
+{
+  pregunta: "¿Qué oficial tiene la función de visitar a los policías heridos y enfermos que se encuentren en el Hospital Central para brindar apoyo y colaboración?",
+  opciones: [
+    "Oficial de Inspección",
+    "Oficial de Guarnición",
+    "Oficial General de Semana",
+    "Oficial de Servicio"
+  ],
+  respuestaCorrecta: "Oficial General de Semana"
+},
+{
+  pregunta: "Se entiende por alistamiento, el acto por el cual el personal uniformado de la Policía Nacional se mantiene en determinado grado de disponibilidad dentro de las unidades o instalaciones policiales. Dentro de los grados de alistamiento tenemos en el que la totalidad del personal de una unidad permanece disponible en las instalaciones policiales con capacidad de cumplir de forma inmediata cualquier clase de misión, de acuerdo con su especialidad y situación de orden público. ¿A cuál se refiere?",
+  opciones: ["Alistamiento de Primer Grado", "Alistamiento de Segundo Grado", "Acuartelamiento de primer grado", "Alistamiento de tercer grado"],
+  respuestaCorrecta: "Alistamiento de Primer Grado"
+},
+{
+  pregunta: "Sirve como medio para poder garantizar la procedencia de las órdenes y ciertas atribuciones sobre seguridad de instalaciones y puestos importantes. Por medio de este se identifican durante la noche los diferentes servicios y otras autoridades que por razón de su cargo y funciones deban entrar a las instalaciones policiales.",
+  opciones: ["santo, seña y contraseña", "claves policiales", "códigos policiales", "contraseñas para el servicio en instalaciones policiales"],
+  respuestaCorrecta: "santo, seña y contraseña"
+},
+{
+  pregunta: "Dentro de los libros del comandante de guardia de prevención y seguridad de instalaciones encontramos el libro en donde se relacionan los nombres del Oficial de Guarnición, Oficial de Servicio, comandante de Guardia de Prevención y Seguridad de Instalaciones y turnos de centinelas. ¿Cuál de los siguientes es ese libro?",
+  opciones: ["Libro de Población", "Libro de Control de Vehículos de la Policía y Particulares", "Libro de actas del servicio", "Libro de Minuta de Servicios"],
+  respuestaCorrecta: "Libro de Minuta de Servicios"
+},
+{
+  pregunta: "En ellos se consignan las órdenes e instrucciones impartidas por el respectivo superior que los releva, las novedades ocurridas durante el servicio y las observaciones y recomendaciones que se estimen necesarias. ¿Cuál es su nombre?",
+  opciones: [
+    "LIBROS DEL COMANDANTE DE GUARDIA DE PREVENCIÓN Y SEGURIDAD DE INSTALACIONES",
+    "LIBROS PARA LOS SERVICIOS DE GUARNICIÓN Y CONTROL DE LAS UNIDADES POLICIALES",
+    "FOLIOS PARA LOS SERVICIOS DE GUARNICIÓN Y CONTROL DE LAS UNIDADES POLICIALES",
+    "ACTAS PARA LOS SERVICIOS DE GUARNICIÓN Y CONTROL DE LAS UNIDADES POLICIALES"
+  ],
+  respuestaCorrecta: "LIBROS PARA LOS SERVICIOS DE GUARNICIÓN Y CONTROL DE LAS UNIDADES POLICIALES"
+},
+{
+  pregunta: "En un municipio, una menor de 15 años ha cometido, presuntamente, un delito. Sin embargo, en el municipio no se cuenta con un juez penal para adolescentes. De conformidad con el artículo 166 del Código de la Infancia y la Adolescencia, la autoridad competente para encargar al juez que asumirá las funciones relativas al juzgamiento y control de garantías para el proceso es:",
+  opciones: [
+    "el Comisario de Familia",
+    "el Consejo de la Judicatura",
+    "la Defensoría del Pueblo",
+    "la Personería Municipal"
+  ],
+  respuestaCorrecta: "el Consejo de la Judicatura"
+},
+{
+  pregunta: "Según el artículo 164 del Código de Infancia y Adolescencia, ¿cuál de las siguientes afirmaciones es correcta sobre la creación y funciones de los juzgados penales para adolescentes?",
+  opciones: [
+    "Los juzgados penales para adolescentes funcionarán exclusivamente en las capitales de departamento.",
+    "La creación y funcionamiento de los juzgados penales para adolescentes es responsabilidad únicamente de los jueces de menores.",
+    "Mientras se crean los juzgados penales para adolescentes, los jueces de menores asumirán sus competencias de manera transitoria.",
+    "Los juzgados penales para adolescentes son parte de una jurisdicción especial diferente a la penal ordinaria."
+  ],
+  respuestaCorrecta: "Mientras se crean los juzgados penales para adolescentes, los jueces de menores asumirán sus competencias de manera transitoria."
+},
+{
+  pregunta: "En un municipio donde no existe juzgado penal para adolescentes, un adolescente de 16 años es capturado por la presunta comisión de un delito. ¿Qué juez debe asumir el conocimiento del proceso penal en este caso, según el orden de competencia establecido en la ley?",
+  opciones: [
+    "El juez municipal, ya que puede conocer cualquier delito en zonas rurales.",
+    "El juez penal del circuito, por tratarse de un delito cometido por un menor de edad.",
+    "El juez promiscuo de familia, como autoridad transitoria hasta la creación de juzgados especializados.",
+    "El defensor de familia, por tratarse de un adolescente sujeto de protección integral."
+  ],
+  respuestaCorrecta: "El juez promiscuo de familia, como autoridad transitoria hasta la creación de juzgados especializados."
+},
+{
+  pregunta: "Un adolescente de 15 años es imputado por un delito en una población donde no existe juzgado penal para adolescentes ni juez promiscuo de familia. Según las reglas de competencia establecidas, ¿qué autoridad debe conocer del proceso de responsabilidad penal para adolescentes?",
+  opciones: [
+    "El defensor público asignado por la Defensoría del Pueblo.",
+    "El juez municipal del lugar donde ocurrió el hecho.",
+    "El fiscal delegado para infancia y adolescencia.",
+    "El inspector de policía como autoridad administrativa."
+  ],
+  respuestaCorrecta: "El juez municipal del lugar donde ocurrió el hecho."
+},
+{
+  pregunta: "De acuerdo con el artículo 168 de la Ley 1098 de 2006, las Salas de Asuntos Penales para Adolescentes en los Tribunales Superiores de Distrito Judicial deben estar integradas por:",
+  opciones: [
+    "Tres magistrados de la Sala Penal exclusivamente.",
+    "Un magistrado de la Sala Penal y dos magistrados de la Sala de Familia o en su defecto de la Sala Civil.",
+    "Dos magistrados de la Sala Penal y uno de la Sala de Familia.",
+    "Un magistrado de la Sala Civil y dos de la Sala Penal."
+  ],
+  respuestaCorrecta: "Un magistrado de la Sala Penal y dos magistrados de la Sala de Familia o en su defecto de la Sala Civil."
+},
+{
+  pregunta: "Un adolescente es sorprendido portando pólvora en un parque. ¿Qué actuación corresponde a la Policía de Infancia y Adolescencia?",
+  opciones: [
+    "Decomisar la pólvora y sancionar penalmente al adolescente.",
+    "Incautar la pólvora, proteger al adolescente y activar el procedimiento de restablecimiento de derechos.",
+    "Permitirle continuar en el parque bajo advertencia.",
+    "Llamar únicamente a los padres para que recojan la pólvora."
+  ],
+  respuestaCorrecta: "Incautar la pólvora, proteger al adolescente y activar el procedimiento de restablecimiento de derechos."
+},
+{
+  pregunta: "Un ciudadano denuncia a la Policía que en una tienda cercana se venden cigarrillos a menores de edad. Según el Artículo 89, ¿qué debe hacer la Policía?",
+  opciones: [
+    "Informar a la tienda que debe colocar un cartel prohibiendo la venta a menores.",
+    "Ignorar la queja si no hay pruebas.",
+    "Realizar labores de vigilancia, impedir la venta y sancionar si se comprueba la violación.",
+    "Notificar a los padres de los niños compradores para que tomen acciones."
+  ],
+  respuestaCorrecta: "Realizar labores de vigilancia, impedir la venta y sancionar si se comprueba la violación."
+},
+{
+  pregunta: "Durante una visita a una discoteca en un centro comercial, la Policía de Infancia y Adolescencia encuentra a varios adolescentes de 15 años consumiendo bebidas alcohólicas. Según el Artículo 89, la actuación correcta de los policías debe ser:",
+  opciones: [
+    "Permitir que permanezcan si están acompañados de un adulto responsable.",
+    "Retirarlos del lugar y sancionar al establecimiento por permitir el ingreso y consumo.",
+    "Advertir verbalmente a los adolescentes sin necesidad de sanciones.",
+    "Informar a sus padres y retirarse del lugar sin intervenir."
+  ],
+  respuestaCorrecta: "Retirarlos del lugar y sancionar al establecimiento por permitir el ingreso y consumo."
+},
+{
+  pregunta: "Un menor de edad quiere trabajar como actor en un comercial de televisión, por lo que sus padres y la representante legal de la productora que grabará el comercial le envían una solicitud de autorización al inspector de trabajo. De acuerdo con el artículo 113 del Código de la Infancia y la Adolescencia, antes de conceder el permiso, el inspector de trabajo debe",
+  opciones: [
+    "contactar a una comisaría de familia para que apruebe las actividades que realizará el menor.",
+    "revisar que en caso de realizar trabajos peligrosos se cuente con pólizas de aseguramiento.",
+    "verificar que se garanticen las condiciones mínimas de seguridad del trabajo del menor.",
+    "someter al concepto del ministro del trabajo la determinación de la jornada máxima."
+  ],
+  respuestaCorrecta: "verificar que se garanticen las condiciones mínimas de seguridad del trabajo del menor."
+},
+{
+  pregunta: "Los vecinos de un barrio acuden a la policía porque existen indicios serios y suficientes para considerar que la integridad física y mental de un menor, que está al interior de una vivienda, se encuentra en peligro. Por tal motivo, una patrulla de policía acude a la vivienda para verificar las condiciones del menor, sin embargo, los residentes les niegan el ingreso a la propiedad. Según el artículo 106 del Código de la Infancia y la Adolescencia, en este contexto la patrulla de policía está facultada para allanar el inmueble",
+  opciones: [
+    "Con autorización del comandante de su unidad policial.",
+    "A petición de la Unidad de Protección a Menores.",
+    "A petición de la Defensoría de Familia.",
+    "Con autorización de un defensor público."
+  ],
+  respuestaCorrecta: "A petición de la Defensoría de Familia."
+},
+{
+  pregunta: "Natalia, una adolescente de 17 años, desea ingresar a trabajar en un almacén de ropa; sin embargo, su empleadora le indica que por solo laborar 6 horas la puede emplear, pero pagándole un poco menos del salario mínimo legal vigente. De acuerdo al Código de Infancia y Adolescencia esto es:",
+  opciones: [
+    "Correcto ya que el salario es de acuerdo con la actividad desempeñada y proporcional.",
+    "Incorrecto puesto que en ningún caso la remuneración podrá ser inferior al salario mínimo legal vigente.",
+    "Incorrecto porque los adolescentes de 17 años solo pueden laborar 4 horas diurnas.",
+    "Correcto pues por ser menor de edad no podría realizar trabajos que haría un mayor, por lo que saldría más costoso para la empresa pagar el salario mínimo."
+  ],
+  respuestaCorrecta: "Incorrecto puesto que en ningún caso la remuneración podrá ser inferior al salario mínimo legal vigente."
+},
+{
+  pregunta: "Maritza, una adolescente mayor de 17 años de edad, se encuentra en el sexto mes de gestación y labora en una tienda de ropas. ¿Cuál sería la jornada laboral que debe cumplir según el Código de Infancia y Adolescencia?",
+  opciones: [
+    "Seis horas diarias y treinta horas a la semana y hasta las 6:00 de la tarde.",
+    "Una jornada máxima de ocho horas diarias y 40 horas a la semana y hasta las 8:00 de la noche.",
+    "No podrá exceder de cuatro horas diarias.",
+    "Una jornada máxima de siete horas diarias y 40 horas a la semana y hasta las 8:00 de la noche."
+  ],
+  respuestaCorrecta: "Una jornada máxima de ocho horas diarias y 40 horas a la semana y hasta las 8:00 de la noche."
+},
+{
+  pregunta: "Natalia, una adolescente de 16 años de edad, se encuentra en el quinto mes de gestación, labora en una tienda de ropas. ¿Cuál sería la jornada laboral que debe cumplir según el Código de Infancia y Adolescencia?",
+  opciones: [
+    "Seis horas diarias y treinta horas a la semana y hasta las 6:00 de la tarde.",
+    "Una jornada máxima de ocho horas diarias y 40 horas a la semana y hasta las 8:00 de la noche.",
+    "No podrá exceder de cuatro horas diarias.",
+    "Una jornada máxima de siete horas diarias y 40 horas a la semana y hasta las 8:00 de la noche."
+  ],
+  respuestaCorrecta: "Seis horas diarias y treinta horas a la semana y hasta las 6:00 de la tarde."
+},
+{
+  pregunta: "Los adolescentes mayores de 15 y menores de 17 años, sólo podrán trabajar en jornada diurna máxima de:",
+  opciones: [
+    "Seis horas diarias y treinta horas a la semana y hasta las 6:00 de la tarde.",
+    "Una jornada máxima de ocho horas diarias y 40 horas a la semana y hasta las 8:00 de la noche.",
+    "No podrá exceder de cuatro horas diarias.",
+    "Una jornada máxima de siete horas diarias y 40 horas a la semana y hasta las 8:00 de la noche."
+  ],
+  respuestaCorrecta: "Seis horas diarias y treinta horas a la semana y hasta las 6:00 de la tarde."
+},
+{
+  pregunta: "Un policía de infancia y adolescencia comete un abuso de autoridad con un menor de edad, por lo tanto, se le inicia investigación disciplinaria. A quien le corresponde adelantar dicho proceso es:",
+  opciones: [
+    "A la oficina de control disciplinario interno",
+    "Director general de la policía",
+    "Inspector delegado",
+    "Inspector general"
+  ],
+  respuestaCorrecta: "Inspector general"
+},
+{
+  pregunta: "De acuerdo a la ley 1098 de 2006, la Policía Nacional es una entidad que integra el Sistema Nacional de Bienestar Familiar. Su misión como miembro del Sistema es:",
+  opciones: [
+    "Garantizar la protección integral de los niños, las niñas y los adolescentes en el marco de las competencias y funciones que le asigna la ley.",
+    "Restablecer los derechos de los niños, niñas y adolescentes cuando sean vulnerados.",
+    "Brindar todos los requerimientos que en materia de seguridad, alimentación, salud y bienestar requieran los niños, niñas y adolescentes maltratados o abandonados.",
+    "Aplicar las medidas correcticas ante la comisión de conductas punibles o comportamientos contrarios a la convivencia por parte de los niños, niñas y adolescentes."
+  ],
+  respuestaCorrecta: "Garantizar la protección integral de los niños, las niñas y los adolescentes en el marco de las competencias y funciones que le asigna la ley."
+},
+{
+  pregunta: "Un joven de 15 años es detenido por la Policía Nacional por presuntamente haber cometido un hurto. ¿Cuál autoridad judicial debe conocer del proceso penal que se le inicie?",
+  opciones: [
+    "El juez penal municipal, dado que el delito es común.",
+    "El juez promiscuo de familia, debido a la edad del presunto infractor.",
+    "El juez penal para adolescentes, por tratarse de un menor de edad entre 14 y 18 años.",
+    "El juez penal del circuito, ya que el hurto es un delito de mayor cuantía."
+  ],
+  respuestaCorrecta: "El juez penal para adolescentes, por tratarse de un menor de edad entre 14 y 18 años."
+}
+                    // Agrega más preguntas para el Nivel 6 aquí
+                ]
+            },
+            {
+                nivel: 7,
+                preguntas: [
+                    {
+                        pregunta: "¿Qué papel juega la tecnología en la seguridad ciudadana?",
+                        opciones: ["Ninguno, es solo para el entretenimiento", "Es fundamental para la vigilancia, la recolección de pruebas y la comunicación policial", "Solo para tareas administrativas", "Remplaza la presencia policial"],
+                        respuestaCorrecta: "Es fundamental para la vigilancia, la recolección de pruebas y la comunicación policial"
+                    },
+                    {
+                        pregunta: "¿Qué es un cuadrante en la Policía Nacional?",
+                        opciones: ["Un tipo de vehículo policial", "Una división geográfica del territorio que permite una respuesta policial más rápida y eficaz", "Un grupo de policías especializados", "Un área de entrenamiento"],
+                        respuestaCorrecta: "Una división geográfica del territorio que permite una respuesta policial más rápida y eficaz"
+                    },
+                    {
+                        pregunta: "¿Qué es el Modelo Nacional de Vigilancia Comunitaria por Cuadrantes (MNVCC)?",
+                        opciones: ["Un modelo para vigilar fronteras", "Una estrategia de la Policía Nacional para garantizar la seguridad y convivencia ciudadana a través de la proximidad y la acción integral en un sector geográfico determinado", "Un plan de vacaciones para policías", "Un programa de capacitación interna"],
+                        respuestaCorrecta: "Una estrategia de la Policía Nacional para garantizar la seguridad y convivencia ciudadana a través de la proximidad y la acción integral en un sector geográfico determinado"
+                    }
+                    // Agrega más preguntas para el Nivel 7 aquí
+                ]
+            }
+        ];
+        
+        function actualizarReloj() {
+  const ahora = new Date();
+  const horas = ahora.getHours().toString().padStart(2, '0');
+  const minutos = ahora.getMinutes().toString().padStart(2, '0');
+  const segundos = ahora.getSeconds().toString().padStart(2, '0');
+  horaSpan.textContent = horas;
+  minutosSpan.textContent = minutos;
+  segundosSpan.textContent = segundos;
+  }
+  setInterval(actualizarReloj, 1000); // Actualizar cada segundo
+  actualizarReloj(); // Para mostrar el reloj inmediatamente
+
+        function mostrarSelectorNiveles() {
+            selectorNivelesDiv.innerHTML = '<h2>Selecciona un Nivel:</h2>';
+            cuestionario.forEach((nivelData, index) => {
+                const nivelBtn = document.createElement('button');
+                nivelBtn.textContent = `Nivel ${nivelData.nivel}`;
+                nivelBtn.addEventListener('click', () => {
+                    nivelActual = index;
+                    puntuacion = 0;
+                    mostrarNivel(nivelActual);
+                    selectorNivelesDiv.style.display = 'none';
+                });
+                selectorNivelesDiv.appendChild(nivelBtn);
+            });
+        }
+
+        function mostrarNivel(nivelIndex) {
+            contenedorNiveles.innerHTML = '';
+            siguienteNivelBtn.style.display = 'none';
+
+            if (nivelIndex !== null && nivelIndex < cuestionario.length) {
+                const nivelData = cuestionario[nivelIndex];
+                const nivelDiv = document.createElement('div');
+                nivelDiv.classList.add('nivel');
+                nivelDiv.innerHTML = `<h2>Nivel ${nivelData.nivel}</h2>`;
+
+                nivelData.preguntas.forEach((preguntaData, index) => {
+                    const preguntaDiv = document.createElement('div');
+                    preguntaDiv.classList.add('pregunta');
+                    preguntaDiv.innerHTML = `<p>${index + 1}. ${preguntaData.pregunta}</p>`;
+
+                    const opcionesDiv = document.createElement('div');
+                    opcionesDiv.classList.add('opciones');
+                    preguntaData.opciones.forEach(opcion => {
+                        const inputId = `pregunta-${nivelIndex}-${index}-${opcion.replace(/\s+/g, '-')}`;
+                        const label = document.createElement('label');
+                        label.innerHTML = `
+                            <input type="radio" name="pregunta-${nivelIndex}-${index}" value="${opcion}" data-respuesta="${preguntaData.respuestaCorrecta}">
+                            ${opcion}
+                        `;
+                        label.addEventListener('click', function() {
+                            const radios = document.querySelectorAll(`input[name="pregunta-${nivelIndex}-${index}"]`);
+                            radios.forEach(radioLabel => {
+                                radioLabel.parentElement.classList.remove('seleccionada', 'correcto', 'incorrecto');
+                            });
+                            this.classList.add('seleccionada');
+                            const respuestaSeleccionada = this.querySelector('input').value;
+                            const respuestaCorrecta = this.querySelector('input').getAttribute('data-respuesta');
+                            if (respuestaSeleccionada === respuestaCorrecta) {
+                                this.classList.add('correcto');
+                            } else {
+                                this.classList.add('incorrecto');
+                            }
+                            if (nivelActual === cuestionario.length - 1) {
+                                finalizarBtn.style.display = 'block';
+                                siguienteNivelBtn.style.display = 'none';
+                            } else if (nivelActual < cuestionario.length - 1) {
+                                siguienteNivelBtn.style.display = 'block';
+                                finalizarBtn.style.display = 'none';
+                            }
+                        });
+                        opcionesDiv.appendChild(label);
+                    });
+                    preguntaDiv.appendChild(opcionesDiv);
+                    nivelDiv.appendChild(preguntaDiv);
+                });
+
+                contenedorNiveles.appendChild(nivelDiv);
+
+                if (nivelIndex < cuestionario.length - 1) {
+                    siguienteNivelBtn.style.display = 'block';
+                    finalizarBtn.style.display = 'none';
+                } else if (nivelIndex === cuestionario.length - 1) {
+                    siguienteNivelBtn.style.display = 'none';
+                    finalizarBtn.style.display = 'block';
+                }
+            } else if (nivelIndex !== null) {
+                contenedorNiveles.innerHTML = '<p>¡Cuestionario completado!</p>';
+                siguienteNivelBtn.style.display = 'none';
+                finalizarBtn.style.display = 'none';
+                resultadosDiv.style.display = 'block';
+                puntuacionTotalSpan.textContent = puntuacion;
+            }
+        }
+
+        function mostrarSiguienteNivel() {
+            if (nivelActual !== null && nivelActual < cuestionario.length - 1) {
+                const respuestasNivelActual = obtenerRespuestasNivel(nivelActual);
+                puntuacion += calcularPuntuacionNivel(cuestionario[nivelActual].preguntas, respuestasNivelActual);
+                nivelActual++;
+                mostrarNivel(nivelActual);
+            } else if (nivelActual === cuestionario.length - 1) {
+                finalizarCuestionario();
+            }
+        }
+
+        function obtenerRespuestasNivel(nivelIndex) {
+            const respuestas = {};
+            const preguntasNivel = contenedorNiveles.querySelectorAll('.pregunta');
+            preguntasNivel.forEach((pregunta, index) => {
+                const radios = pregunta.querySelectorAll(`input[type="radio"][name="pregunta-${nivelIndex}-${index}"]`);
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        respuestas[`pregunta-${index}`] = radio.value;
+                    }
+                });
+            });
+            return respuestas;
+        }
+
+        function calcularPuntuacionNivel(preguntasNivel, respuestasUsuario) {
+            let puntuacionNivel = 0;
+            preguntasNivel.forEach((pregunta, index) => {
+                if (respuestasUsuario[`pregunta-${index}`] === pregunta.respuestaCorrecta) {
+                    puntuacionNivel++;
+                }
+            });
+            return puntuacionNivel;
+        }
+
+        function finalizarCuestionario() {
+            if (nivelActual !== null) {
+                const respuestasNivelActual = obtenerRespuestasNivel(nivelActual);
+                puntuacion += calcularPuntuacionNivel(cuestionario[nivelActual].preguntas, respuestasNivelActual);
+                mostrarNivel(cuestionario.length);
+            }
+        }
+
+        mostrarSelectorNiveles();
+    </script>
+</body>
+</html>
